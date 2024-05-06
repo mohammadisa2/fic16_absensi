@@ -7,6 +7,7 @@ import 'data/datasources/auth_remote_datasource.dart';
 import 'ui/auth/bloc/login/login_bloc.dart';
 import 'ui/auth/bloc/logout/logout_bloc.dart';
 import 'ui/auth/pages/splash_page.dart';
+import 'ui/home/bloc/update_user_register_face/update_user_register_face_bloc.dart';
 // import 'ui/auth/pages/splash_page.dart';
 
 void main() {
@@ -25,6 +26,10 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => LogoutBloc(AuthRemoteDatasource()),
+        ),
+        BlocProvider(
+          create: (context) =>
+              UpdateUserRegisterFaceBloc(AuthRemoteDatasource()),
         ),
       ],
       child: MaterialApp(

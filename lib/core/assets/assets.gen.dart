@@ -136,6 +136,10 @@ class Assets {
 
   static const $AssetsIconsGen icons = $AssetsIconsGen();
   static const $AssetsImagesGen images = $AssetsImagesGen();
+  static const String mobileFaceNet = 'assets/mobile_face_net.tflite';
+
+  /// List of all assets
+  static List<String> get values => [mobileFaceNet];
 }
 
 class AssetGenImage {

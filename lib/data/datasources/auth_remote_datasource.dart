@@ -1,11 +1,12 @@
 import 'dart:convert';
 
 import 'package:dartz/dartz.dart';
+import 'package:fic16_absensi/core/constants/variables.dart';
+import 'package:fic16_absensi/data/datasources/auth_local_datasource.dart';
+import 'package:fic16_absensi/data/models/response/auth_response_model.dart';
 import 'package:http/http.dart' as http;
 
-import '../../core/constants/variables.dart';
-import '../models/response/auth_response_model.dart';
-import 'auth_local_datasource.dart';
+import '../models/response/user_response_model.dart';
 
 class AuthRemoteDatasource {
   Future<Either<String, AuthResponseModel>> login(
@@ -47,6 +48,25 @@ class AuthRemoteDatasource {
       return const Right('Logout success');
     } else {
       return const Left('Failed to logout');
+    }
+  }
+
+  Future<Either<String, UserResponseModel>> updateProfileRegisterFace(
+    String embedding,
+  ) async {
+    final authData = await AuthLocalDatasource().getAuthData();
+    final url = Uri.parse('${Variables.baseUrl}/api/update-profile');
+    final request = http.MultipartRequest('POST', url)
+      ..headers['Authorization'] = 'Bearer ${authData?.token}'
+      ..fields['face_embedding'] = embedding;
+
+    final response = await request.send();
+    final responseString = await response.stream.bytesToString();
+
+    if (response.statusCode == 200) {
+      return Right(UserResponseModel.fromJson(responseString));
+    } else {
+      return const Left('Failed to update profile');
     }
   }
 }

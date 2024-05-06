@@ -1,8 +1,8 @@
-import 'package:fic16_absensi/ui/home/pages/setting_page.dart';
 import 'package:flutter/material.dart';
+import 'package:fic16_absensi/ui/home/pages/home_page.dart';
+import 'package:fic16_absensi/ui/home/pages/setting_page.dart';
 
 import '../../../core/core.dart';
-import 'home_page.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -14,12 +14,12 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   int _selectedIndex = 0;
   final _widgets = [
+    // const HomePage(),
     const HomePage(),
     const Center(child: Text('This is history page')),
-    const Center(child: SettingPage()),
+    const SettingPage(),
     const Center(child: Text('This is profile page')),
   ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -39,6 +39,7 @@ class _SplashPageState extends State<SplashPage> {
             );
           }
           if (snapshot.hasData) {
+            // ignore: unrelated_type_equality_checks
             if (snapshot.data! == true) {
               Future.delayed(
                 const Duration(seconds: 2),
