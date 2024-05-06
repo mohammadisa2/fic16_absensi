@@ -15,16 +15,23 @@ class Recognizer {
 
   String get modelName => 'assets/mobile_face_net.tflite';
 
-  Future<void> loadModel() async {
+  Future<Interpreter?> loadModel() async {
     try {
       interpreter = await Interpreter.fromAsset(modelName);
     } catch (e) {
       print('Unable to create interpreter, Caught Exception: ${e.toString()}');
     }
+    return null;
   }
 
   Recognizer({int? numThreads}) {
-    _interpreterOptions = InterpreterOptions();
+    final gpuDelegateV2 = GpuDelegateV2(
+        options: GpuDelegateOptionsV2(
+      isPrecisionLossAllowed: false,
+      maxDelegatePartitions: 1,
+    ));
+
+    _interpreterOptions = InterpreterOptions()..addDelegate(gpuDelegateV2);
 
     if (numThreads != null) {
       _interpreterOptions.threads = numThreads;

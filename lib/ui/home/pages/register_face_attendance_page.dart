@@ -67,7 +67,8 @@ class _RegisterFaceAttendencePageState
 
 //TODO initialize face detector
     detector = FaceDetector(
-        options: FaceDetectorOptions(performanceMode: FaceDetectorMode.fast));
+      options: FaceDetectorOptions(performanceMode: FaceDetectorMode.accurate),
+    );
 
     //TODO initialize face recognizer
     recognizer = Recognizer();
@@ -90,8 +91,11 @@ class _RegisterFaceAttendencePageState
     _availableCameras = await availableCameras();
     _controller = CameraController(
       description,
-      ResolutionPreset.high,
+      ResolutionPreset.low,
+      enableAudio: false,
+      imageFormatGroup: ImageFormatGroup.yuv420,
     );
+    await _controller!.initialize();
 
     // size = _controller!.value.previewSize!;
 
@@ -114,6 +118,19 @@ class _RegisterFaceAttendencePageState
 
   dynamic _scanResults;
   CameraImage? frame;
+  InputImageRotation rotationIntToImageRotation(int rotation) {
+    switch (rotation) {
+      case 0:
+        return InputImageRotation.rotation0deg;
+      case 90:
+        return InputImageRotation.rotation90deg;
+      case 180:
+        return InputImageRotation.rotation180deg;
+      default:
+        assert(rotation == 270);
+        return InputImageRotation.rotation270deg;
+    }
+  }
 
   InputImage getInputImage() {
     final WriteBuffer allBytes = WriteBuffer();
@@ -123,20 +140,21 @@ class _RegisterFaceAttendencePageState
     final bytes = allBytes.done().buffer.asUint8List();
     final Size imageSize =
         Size(frame!.width.toDouble(), frame!.height.toDouble());
-    final camera = description;
-    final imageRotation =
-        InputImageRotationValue.fromRawValue(camera.sensorOrientation);
+    final imageRotation = rotationIntToImageRotation(
+      description.sensorOrientation,
+    );
 
     final inputImageFormat =
-        InputImageFormatValue.fromRawValue(frame!.format.raw);
+        InputImageFormatValue.fromRawValue(frame!.format.raw) ??
+            InputImageFormat.nv21;
 
     final int bytesPerRow =
         frame?.planes.isNotEmpty == true ? frame!.planes.first.bytesPerRow : 0;
 
     final inputImageMetaData = InputImageMetadata(
       size: imageSize,
-      rotation: imageRotation!,
-      format: inputImageFormat!,
+      rotation: imageRotation,
+      format: inputImageFormat,
       bytesPerRow: bytesPerRow,
     );
 
@@ -208,13 +226,19 @@ class _RegisterFaceAttendencePageState
         angle: camDirec == CameraLensDirection.front ? 270 : 90);
 
     for (Face face in faces) {
-      Rect faceRect = face.boundingBox;
+      double x, y, w, h;
+      x = (face.boundingBox.left - 10);
+      y = (face.boundingBox.top - 10);
+      w = (face.boundingBox.width + 10);
+      h = (face.boundingBox.height + 10);
       //TODO crop face
-      img.Image croppedFace = img.copyCrop(image!,
-          x: faceRect.left.toInt(),
-          y: faceRect.top.toInt(),
-          width: faceRect.width.toInt(),
-          height: faceRect.height.toInt());
+      img.Image croppedFace = img.copyCrop(
+        image!,
+        x: x.round(),
+        y: y.round(),
+        width: w.round(),
+        height: h.round(),
+      );
 
       //TODO pass cropped face to face recognition model
       RecognitionEmbedding recognition =
