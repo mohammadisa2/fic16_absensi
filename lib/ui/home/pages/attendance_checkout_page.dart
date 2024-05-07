@@ -375,7 +375,7 @@ class _AttendanceCheckoutPageState extends State<AttendanceCheckoutPage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Absensi Datang',
+                                'Absensi Pulang',
                                 style: TextStyle(
                                   color: AppColors.white,
                                   fontWeight: FontWeight.w700,

@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'get_company_bloc.dart';
+part of 'add_permission_bloc.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,58 +15,59 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
-mixin _$GetCompanyEvent {
+mixin _$AddPermissionEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
-    required TResult Function() getCompany,
+    required TResult Function(String date, String reason, XFile? image)
+        addPermission,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
-    TResult? Function()? getCompany,
+    TResult? Function(String date, String reason, XFile? image)? addPermission,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
-    TResult Function()? getCompany,
+    TResult Function(String date, String reason, XFile? image)? addPermission,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Started value) started,
-    required TResult Function(_GetCompany value) getCompany,
+    required TResult Function(_AddPermission value) addPermission,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Started value)? started,
-    TResult? Function(_GetCompany value)? getCompany,
+    TResult? Function(_AddPermission value)? addPermission,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Started value)? started,
-    TResult Function(_GetCompany value)? getCompany,
+    TResult Function(_AddPermission value)? addPermission,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $GetCompanyEventCopyWith<$Res> {
-  factory $GetCompanyEventCopyWith(
-          GetCompanyEvent value, $Res Function(GetCompanyEvent) then) =
-      _$GetCompanyEventCopyWithImpl<$Res, GetCompanyEvent>;
+abstract class $AddPermissionEventCopyWith<$Res> {
+  factory $AddPermissionEventCopyWith(
+          AddPermissionEvent value, $Res Function(AddPermissionEvent) then) =
+      _$AddPermissionEventCopyWithImpl<$Res, AddPermissionEvent>;
 }
 
 /// @nodoc
-class _$GetCompanyEventCopyWithImpl<$Res, $Val extends GetCompanyEvent>
-    implements $GetCompanyEventCopyWith<$Res> {
-  _$GetCompanyEventCopyWithImpl(this._value, this._then);
+class _$AddPermissionEventCopyWithImpl<$Res, $Val extends AddPermissionEvent>
+    implements $AddPermissionEventCopyWith<$Res> {
+  _$AddPermissionEventCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -83,7 +84,7 @@ abstract class _$$StartedImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$StartedImplCopyWithImpl<$Res>
-    extends _$GetCompanyEventCopyWithImpl<$Res, _$StartedImpl>
+    extends _$AddPermissionEventCopyWithImpl<$Res, _$StartedImpl>
     implements _$$StartedImplCopyWith<$Res> {
   __$$StartedImplCopyWithImpl(
       _$StartedImpl _value, $Res Function(_$StartedImpl) _then)
@@ -97,7 +98,7 @@ class _$StartedImpl implements _Started {
 
   @override
   String toString() {
-    return 'GetCompanyEvent.started()';
+    return 'AddPermissionEvent.started()';
   }
 
   @override
@@ -113,7 +114,8 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
-    required TResult Function() getCompany,
+    required TResult Function(String date, String reason, XFile? image)
+        addPermission,
   }) {
     return started();
   }
@@ -122,7 +124,7 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
-    TResult? Function()? getCompany,
+    TResult? Function(String date, String reason, XFile? image)? addPermission,
   }) {
     return started?.call();
   }
@@ -131,7 +133,7 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
-    TResult Function()? getCompany,
+    TResult Function(String date, String reason, XFile? image)? addPermission,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -144,7 +146,7 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Started value) started,
-    required TResult Function(_GetCompany value) getCompany,
+    required TResult Function(_AddPermission value) addPermission,
   }) {
     return started(this);
   }
@@ -153,7 +155,7 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Started value)? started,
-    TResult? Function(_GetCompany value)? getCompany,
+    TResult? Function(_AddPermission value)? addPermission,
   }) {
     return started?.call(this);
   }
@@ -162,7 +164,7 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Started value)? started,
-    TResult Function(_GetCompany value)? getCompany,
+    TResult Function(_AddPermission value)? addPermission,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -172,72 +174,116 @@ class _$StartedImpl implements _Started {
   }
 }
 
-abstract class _Started implements GetCompanyEvent {
+abstract class _Started implements AddPermissionEvent {
   const factory _Started() = _$StartedImpl;
 }
 
 /// @nodoc
-abstract class _$$GetCompanyImplCopyWith<$Res> {
-  factory _$$GetCompanyImplCopyWith(
-          _$GetCompanyImpl value, $Res Function(_$GetCompanyImpl) then) =
-      __$$GetCompanyImplCopyWithImpl<$Res>;
+abstract class _$$AddPermissionImplCopyWith<$Res> {
+  factory _$$AddPermissionImplCopyWith(
+          _$AddPermissionImpl value, $Res Function(_$AddPermissionImpl) then) =
+      __$$AddPermissionImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String date, String reason, XFile? image});
 }
 
 /// @nodoc
-class __$$GetCompanyImplCopyWithImpl<$Res>
-    extends _$GetCompanyEventCopyWithImpl<$Res, _$GetCompanyImpl>
-    implements _$$GetCompanyImplCopyWith<$Res> {
-  __$$GetCompanyImplCopyWithImpl(
-      _$GetCompanyImpl _value, $Res Function(_$GetCompanyImpl) _then)
+class __$$AddPermissionImplCopyWithImpl<$Res>
+    extends _$AddPermissionEventCopyWithImpl<$Res, _$AddPermissionImpl>
+    implements _$$AddPermissionImplCopyWith<$Res> {
+  __$$AddPermissionImplCopyWithImpl(
+      _$AddPermissionImpl _value, $Res Function(_$AddPermissionImpl) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? date = null,
+    Object? reason = null,
+    Object? image = freezed,
+  }) {
+    return _then(_$AddPermissionImpl(
+      date: null == date
+          ? _value.date
+          : date // ignore: cast_nullable_to_non_nullable
+              as String,
+      reason: null == reason
+          ? _value.reason
+          : reason // ignore: cast_nullable_to_non_nullable
+              as String,
+      image: freezed == image
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
+              as XFile?,
+    ));
+  }
 }
 
 /// @nodoc
 
-class _$GetCompanyImpl implements _GetCompany {
-  const _$GetCompanyImpl();
+class _$AddPermissionImpl implements _AddPermission {
+  const _$AddPermissionImpl(
+      {required this.date, required this.reason, required this.image});
+
+  @override
+  final String date;
+  @override
+  final String reason;
+  @override
+  final XFile? image;
 
   @override
   String toString() {
-    return 'GetCompanyEvent.getCompany()';
+    return 'AddPermissionEvent.addPermission(date: $date, reason: $reason, image: $image)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$GetCompanyImpl);
+        (other.runtimeType == runtimeType &&
+            other is _$AddPermissionImpl &&
+            (identical(other.date, date) || other.date == date) &&
+            (identical(other.reason, reason) || other.reason == reason) &&
+            (identical(other.image, image) || other.image == image));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, date, reason, image);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$AddPermissionImplCopyWith<_$AddPermissionImpl> get copyWith =>
+      __$$AddPermissionImplCopyWithImpl<_$AddPermissionImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
-    required TResult Function() getCompany,
+    required TResult Function(String date, String reason, XFile? image)
+        addPermission,
   }) {
-    return getCompany();
+    return addPermission(date, reason, image);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
-    TResult? Function()? getCompany,
+    TResult? Function(String date, String reason, XFile? image)? addPermission,
   }) {
-    return getCompany?.call();
+    return addPermission?.call(date, reason, image);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
-    TResult Function()? getCompany,
+    TResult Function(String date, String reason, XFile? image)? addPermission,
     required TResult orElse(),
   }) {
-    if (getCompany != null) {
-      return getCompany();
+    if (addPermission != null) {
+      return addPermission(date, reason, image);
     }
     return orElse();
   }
@@ -246,45 +292,55 @@ class _$GetCompanyImpl implements _GetCompany {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Started value) started,
-    required TResult Function(_GetCompany value) getCompany,
+    required TResult Function(_AddPermission value) addPermission,
   }) {
-    return getCompany(this);
+    return addPermission(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Started value)? started,
-    TResult? Function(_GetCompany value)? getCompany,
+    TResult? Function(_AddPermission value)? addPermission,
   }) {
-    return getCompany?.call(this);
+    return addPermission?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Started value)? started,
-    TResult Function(_GetCompany value)? getCompany,
+    TResult Function(_AddPermission value)? addPermission,
     required TResult orElse(),
   }) {
-    if (getCompany != null) {
-      return getCompany(this);
+    if (addPermission != null) {
+      return addPermission(this);
     }
     return orElse();
   }
 }
 
-abstract class _GetCompany implements GetCompanyEvent {
-  const factory _GetCompany() = _$GetCompanyImpl;
+abstract class _AddPermission implements AddPermissionEvent {
+  const factory _AddPermission(
+      {required final String date,
+      required final String reason,
+      required final XFile? image}) = _$AddPermissionImpl;
+
+  String get date;
+  String get reason;
+  XFile? get image;
+  @JsonKey(ignore: true)
+  _$$AddPermissionImplCopyWith<_$AddPermissionImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-mixin _$GetCompanyState {
+mixin _$AddPermissionState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(Company data) success,
+    required TResult Function() success,
     required TResult Function(String message) error,
   }) =>
       throw _privateConstructorUsedError;
@@ -292,7 +348,7 @@ mixin _$GetCompanyState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(Company data)? success,
+    TResult? Function()? success,
     TResult? Function(String message)? error,
   }) =>
       throw _privateConstructorUsedError;
@@ -300,7 +356,7 @@ mixin _$GetCompanyState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(Company data)? success,
+    TResult Function()? success,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) =>
@@ -333,16 +389,16 @@ mixin _$GetCompanyState {
 }
 
 /// @nodoc
-abstract class $GetCompanyStateCopyWith<$Res> {
-  factory $GetCompanyStateCopyWith(
-          GetCompanyState value, $Res Function(GetCompanyState) then) =
-      _$GetCompanyStateCopyWithImpl<$Res, GetCompanyState>;
+abstract class $AddPermissionStateCopyWith<$Res> {
+  factory $AddPermissionStateCopyWith(
+          AddPermissionState value, $Res Function(AddPermissionState) then) =
+      _$AddPermissionStateCopyWithImpl<$Res, AddPermissionState>;
 }
 
 /// @nodoc
-class _$GetCompanyStateCopyWithImpl<$Res, $Val extends GetCompanyState>
-    implements $GetCompanyStateCopyWith<$Res> {
-  _$GetCompanyStateCopyWithImpl(this._value, this._then);
+class _$AddPermissionStateCopyWithImpl<$Res, $Val extends AddPermissionState>
+    implements $AddPermissionStateCopyWith<$Res> {
+  _$AddPermissionStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -359,7 +415,7 @@ abstract class _$$InitialImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$InitialImplCopyWithImpl<$Res>
-    extends _$GetCompanyStateCopyWithImpl<$Res, _$InitialImpl>
+    extends _$AddPermissionStateCopyWithImpl<$Res, _$InitialImpl>
     implements _$$InitialImplCopyWith<$Res> {
   __$$InitialImplCopyWithImpl(
       _$InitialImpl _value, $Res Function(_$InitialImpl) _then)
@@ -373,7 +429,7 @@ class _$InitialImpl implements _Initial {
 
   @override
   String toString() {
-    return 'GetCompanyState.initial()';
+    return 'AddPermissionState.initial()';
   }
 
   @override
@@ -390,7 +446,7 @@ class _$InitialImpl implements _Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(Company data) success,
+    required TResult Function() success,
     required TResult Function(String message) error,
   }) {
     return initial();
@@ -401,7 +457,7 @@ class _$InitialImpl implements _Initial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(Company data)? success,
+    TResult? Function()? success,
     TResult? Function(String message)? error,
   }) {
     return initial?.call();
@@ -412,7 +468,7 @@ class _$InitialImpl implements _Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(Company data)? success,
+    TResult Function()? success,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -460,7 +516,7 @@ class _$InitialImpl implements _Initial {
   }
 }
 
-abstract class _Initial implements GetCompanyState {
+abstract class _Initial implements AddPermissionState {
   const factory _Initial() = _$InitialImpl;
 }
 
@@ -473,7 +529,7 @@ abstract class _$$LoadingImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$LoadingImplCopyWithImpl<$Res>
-    extends _$GetCompanyStateCopyWithImpl<$Res, _$LoadingImpl>
+    extends _$AddPermissionStateCopyWithImpl<$Res, _$LoadingImpl>
     implements _$$LoadingImplCopyWith<$Res> {
   __$$LoadingImplCopyWithImpl(
       _$LoadingImpl _value, $Res Function(_$LoadingImpl) _then)
@@ -487,7 +543,7 @@ class _$LoadingImpl implements _Loading {
 
   @override
   String toString() {
-    return 'GetCompanyState.loading()';
+    return 'AddPermissionState.loading()';
   }
 
   @override
@@ -504,7 +560,7 @@ class _$LoadingImpl implements _Loading {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(Company data) success,
+    required TResult Function() success,
     required TResult Function(String message) error,
   }) {
     return loading();
@@ -515,7 +571,7 @@ class _$LoadingImpl implements _Loading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(Company data)? success,
+    TResult? Function()? success,
     TResult? Function(String message)? error,
   }) {
     return loading?.call();
@@ -526,7 +582,7 @@ class _$LoadingImpl implements _Loading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(Company data)? success,
+    TResult Function()? success,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -574,7 +630,7 @@ class _$LoadingImpl implements _Loading {
   }
 }
 
-abstract class _Loading implements GetCompanyState {
+abstract class _Loading implements AddPermissionState {
   const factory _Loading() = _$LoadingImpl;
 }
 
@@ -583,71 +639,45 @@ abstract class _$$SuccessImplCopyWith<$Res> {
   factory _$$SuccessImplCopyWith(
           _$SuccessImpl value, $Res Function(_$SuccessImpl) then) =
       __$$SuccessImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({Company data});
 }
 
 /// @nodoc
 class __$$SuccessImplCopyWithImpl<$Res>
-    extends _$GetCompanyStateCopyWithImpl<$Res, _$SuccessImpl>
+    extends _$AddPermissionStateCopyWithImpl<$Res, _$SuccessImpl>
     implements _$$SuccessImplCopyWith<$Res> {
   __$$SuccessImplCopyWithImpl(
       _$SuccessImpl _value, $Res Function(_$SuccessImpl) _then)
       : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? data = null,
-  }) {
-    return _then(_$SuccessImpl(
-      null == data
-          ? _value.data
-          : data // ignore: cast_nullable_to_non_nullable
-              as Company,
-    ));
-  }
 }
 
 /// @nodoc
 
 class _$SuccessImpl implements _Success {
-  const _$SuccessImpl(this.data);
-
-  @override
-  final Company data;
+  const _$SuccessImpl();
 
   @override
   String toString() {
-    return 'GetCompanyState.success(data: $data)';
+    return 'AddPermissionState.success()';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$SuccessImpl &&
-            (identical(other.data, data) || other.data == data));
+        (other.runtimeType == runtimeType && other is _$SuccessImpl);
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, data);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$SuccessImplCopyWith<_$SuccessImpl> get copyWith =>
-      __$$SuccessImplCopyWithImpl<_$SuccessImpl>(this, _$identity);
+  int get hashCode => runtimeType.hashCode;
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(Company data) success,
+    required TResult Function() success,
     required TResult Function(String message) error,
   }) {
-    return success(data);
+    return success();
   }
 
   @override
@@ -655,10 +685,10 @@ class _$SuccessImpl implements _Success {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(Company data)? success,
+    TResult? Function()? success,
     TResult? Function(String message)? error,
   }) {
-    return success?.call(data);
+    return success?.call();
   }
 
   @override
@@ -666,12 +696,12 @@ class _$SuccessImpl implements _Success {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(Company data)? success,
+    TResult Function()? success,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
     if (success != null) {
-      return success(data);
+      return success();
     }
     return orElse();
   }
@@ -714,13 +744,8 @@ class _$SuccessImpl implements _Success {
   }
 }
 
-abstract class _Success implements GetCompanyState {
-  const factory _Success(final Company data) = _$SuccessImpl;
-
-  Company get data;
-  @JsonKey(ignore: true)
-  _$$SuccessImplCopyWith<_$SuccessImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+abstract class _Success implements AddPermissionState {
+  const factory _Success() = _$SuccessImpl;
 }
 
 /// @nodoc
@@ -734,7 +759,7 @@ abstract class _$$ErrorImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$ErrorImplCopyWithImpl<$Res>
-    extends _$GetCompanyStateCopyWithImpl<$Res, _$ErrorImpl>
+    extends _$AddPermissionStateCopyWithImpl<$Res, _$ErrorImpl>
     implements _$$ErrorImplCopyWith<$Res> {
   __$$ErrorImplCopyWithImpl(
       _$ErrorImpl _value, $Res Function(_$ErrorImpl) _then)
@@ -764,7 +789,7 @@ class _$ErrorImpl implements _Error {
 
   @override
   String toString() {
-    return 'GetCompanyState.error(message: $message)';
+    return 'AddPermissionState.error(message: $message)';
   }
 
   @override
@@ -789,7 +814,7 @@ class _$ErrorImpl implements _Error {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(Company data) success,
+    required TResult Function() success,
     required TResult Function(String message) error,
   }) {
     return error(message);
@@ -800,7 +825,7 @@ class _$ErrorImpl implements _Error {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(Company data)? success,
+    TResult? Function()? success,
     TResult? Function(String message)? error,
   }) {
     return error?.call(message);
@@ -811,7 +836,7 @@ class _$ErrorImpl implements _Error {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(Company data)? success,
+    TResult Function()? success,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -859,7 +884,7 @@ class _$ErrorImpl implements _Error {
   }
 }
 
-abstract class _Error implements GetCompanyState {
+abstract class _Error implements AddPermissionState {
   const factory _Error(final String message) = _$ErrorImpl;
 
   String get message;

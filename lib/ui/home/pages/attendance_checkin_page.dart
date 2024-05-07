@@ -45,7 +45,8 @@ class _AttendanceCheckinPageState extends State<AttendanceCheckinPage> {
 
     //TODO initialize face detector
     detector = FaceDetector(
-        options: FaceDetectorOptions(performanceMode: FaceDetectorMode.fast));
+        options:
+            FaceDetectorOptions(performanceMode: FaceDetectorMode.accurate));
 
     //TODO initialize face recognizer
     recognizer = Recognizer();
@@ -55,9 +56,25 @@ class _AttendanceCheckinPageState extends State<AttendanceCheckinPage> {
     getCurrentPosition();
   }
 
+  @override
+  void dispose() async {
+    if (_controller != null) {
+      await _controller!.stopImageStream();
+      await Future.delayed(const Duration(milliseconds: 200));
+      await _controller!.dispose();
+      _controller = null;
+    }
+    super.dispose();
+  }
+
   _initializeCamera() async {
     _availableCameras = await availableCameras();
-    _controller = CameraController(description, ResolutionPreset.high);
+    _controller = CameraController(
+      description,
+      ResolutionPreset.low,
+      enableAudio: false,
+      imageFormatGroup: ImageFormatGroup.yuv420,
+    );
     await _controller!.initialize().then((_) {
       if (!mounted) {
         return;

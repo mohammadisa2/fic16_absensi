@@ -28,27 +28,31 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  calendar_timeline: ^1.1.2
   camera: ^0.10.5+9
   cupertino_icons: ^1.0.2
   dartz: ^0.10.1
+  dotted_border: ^2.1.0
+  firebase_core: ^2.27.0
+  firebase_messaging: ^14.7.19
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.5
+  flutter_local_notifications: ^17.1.2
   flutter_svg: ^2.0.9
   freezed_annotation: ^2.4.1
   google_fonts: ^5.1.0
+  google_maps_flutter: ^2.2.8
   google_mlkit_commons: ^0.7.1
   google_mlkit_face_detection: ^0.10.1
   http: ^1.2.0
   image: ^4.1.7
+  image_picker: ^1.0.8
   intl: ^0.18.1
+  location: ^6.0.1
+  permission_handler: 8.2.2
   shared_preferences: ^2.2.3
   tflite_flutter: ^0.10.4
-  detect_fake_location: ^1.0.1
-  google_maps_flutter: ^2.2.8
-  location: ^6.0.1
-  permission_handler: ^11.3.1
-  calendar_timeline: ^1.1.2
 
 dev_dependencies:
   build_runner: ^2.4.6

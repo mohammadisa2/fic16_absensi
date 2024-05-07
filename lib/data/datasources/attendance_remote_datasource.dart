@@ -1,13 +1,12 @@
 import 'dart:convert';
 
 import 'package:dartz/dartz.dart';
+import 'package:fic16_absensi/core/constants/variables.dart';
+import 'package:fic16_absensi/data/datasources/auth_local_datasource.dart';
+import 'package:fic16_absensi/data/models/request/checkinout_request_model.dart';
+import 'package:fic16_absensi/data/models/response/checkinout_response_model.dart';
+import 'package:fic16_absensi/data/models/response/company_response_model.dart';
 import 'package:http/http.dart' as http;
-
-import '../../core/constants/variables.dart';
-import '../models/request/checkinout_request_model.dart';
-import '../models/response/checkinout_response_model.dart';
-import '../models/response/company_response_model.dart';
-import 'auth_local_datasource.dart';
 
 class AttendanceRemoteDatasource {
   Future<Either<String, CompanyResponseModel>> getCompanyProfile() async {
@@ -29,7 +28,7 @@ class AttendanceRemoteDatasource {
     }
   }
 
-  Future<Either<String, bool>> isCheckedin() async {
+  Future<Either<String, (bool, bool)>> isCheckedin() async {
     final authData = await AuthLocalDatasource().getAuthData();
     final url = Uri.parse('${Variables.baseUrl}/api/is-checkin');
     final response = await http.get(
@@ -43,7 +42,10 @@ class AttendanceRemoteDatasource {
 
     if (response.statusCode == 200) {
       final responseData = jsonDecode(response.body);
-      return Right(responseData['checkedin'] as bool);
+      return Right((
+        responseData['checkedin'] as bool,
+        responseData['checkedout'] as bool
+      ));
     } else {
       return const Left('Failed to get checkedin status');
     }

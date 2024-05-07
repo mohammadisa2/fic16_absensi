@@ -1,9 +1,9 @@
 import 'package:bloc/bloc.dart';
+import 'package:fic16_absensi/data/models/request/checkinout_request_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../../../data/datasources/attendance_remote_datasource.dart';
-import '../../../../data/models/request/checkinout_request_model.dart';
-import '../../../../data/models/response/checkinout_response_model.dart';
+import 'package:fic16_absensi/data/datasources/attendance_remote_datasource.dart';
+import 'package:fic16_absensi/data/models/response/checkinout_response_model.dart';
 
 part 'checkout_attendance_bloc.freezed.dart';
 part 'checkout_attendance_event.dart';

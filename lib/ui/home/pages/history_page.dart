@@ -19,7 +19,7 @@ class HistoryPage extends StatelessWidget {
         children: [
           CalendarTimeline(
             initialDate: DateTime.now(),
-            firstDate: DateTime(2019, 1, 15),
+            firstDate: DateTime.now().subtract(Duration(days: 7)),
             lastDate: DateTime.now().add(const Duration(days: 7)),
             onDateSelected: (date) {},
             leftMargin: 20,
@@ -27,7 +27,7 @@ class HistoryPage extends StatelessWidget {
             dayColor: AppColors.black,
             activeDayColor: Colors.white,
             activeBackgroundDayColor: AppColors.primary,
-            showYears: true,
+            // showYears: true,
           ),
           const SpaceHeight(45.0),
           const HistoryAttendance(),

@@ -1,11 +1,16 @@
-import 'package:detect_fake_location/detect_fake_location.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/services.dart';
+import 'package:fic16_absensi/core/helper/radius_calculate.dart';
 import 'package:fic16_absensi/data/datasources/auth_local_datasource.dart';
+import 'package:fic16_absensi/ui/home/bloc/get_company/get_company_bloc.dart';
+import 'package:fic16_absensi/ui/home/bloc/is_checkedin/is_checkedin_bloc.dart';
 import 'package:fic16_absensi/ui/home/pages/attendance_checkin_page.dart';
 import 'package:fic16_absensi/ui/home/pages/attendance_checkout_page.dart';
+import 'package:fic16_absensi/ui/home/pages/permission_page.dart';
 import 'package:fic16_absensi/ui/home/pages/register_face_attendance_page.dart';
-import 'package:fic16_absensi/ui/home/pages/setting_page.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:location/location.dart';
+// import 'package:safe_device/safe_device.dart';
 
 import '../../../core/core.dart';
 import '../widgets/menu_button.dart';
@@ -23,7 +28,54 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     _initializeFaceEmbedding();
+    context.read<IsCheckedinBloc>().add(const IsCheckedinEvent.isCheckedIn());
+    context.read<GetCompanyBloc>().add(const GetCompanyEvent.getCompany());
     super.initState();
+    getCurrentPosition();
+  }
+
+  double? latitude;
+  double? longitude;
+
+  Future<void> getCurrentPosition() async {
+    try {
+      Location location = Location();
+
+      bool serviceEnabled;
+      PermissionStatus permissionGranted;
+      LocationData locationData;
+
+      serviceEnabled = await location.serviceEnabled();
+      if (!serviceEnabled) {
+        serviceEnabled = await location.requestService();
+        if (!serviceEnabled) {
+          return;
+        }
+      }
+
+      permissionGranted = await location.hasPermission();
+      if (permissionGranted == PermissionStatus.denied) {
+        permissionGranted = await location.requestPermission();
+        if (permissionGranted != PermissionStatus.granted) {
+          return;
+        }
+      }
+
+      locationData = await location.getLocation();
+      latitude = locationData.latitude;
+      longitude = locationData.longitude;
+
+      setState(() {});
+    } on PlatformException catch (e) {
+      if (e.code == 'IO_ERROR') {
+        debugPrint(
+            'A network error occurred trying to lookup the supplied coordinates: ${e.message}');
+      } else {
+        debugPrint('Failed to lookup coordinates: ${e.message}');
+      }
+    } catch (e) {
+      debugPrint('An unknown error occurred: $e');
+    }
   }
 
   Future<void> _initializeFaceEmbedding() async {
@@ -161,80 +213,214 @@ class _HomePageState extends State<HomePage> {
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   children: [
-                    MenuButton(
-                      label: 'Datang',
-                      iconPath: Assets.icons.menu.datang.path,
-                      onPressed: () async {
-                        // Deteksi lokasi palsu
-                        bool isFakeLocation =
-                            await DetectFakeLocation().detectFakeLocation();
-                        // Jika lokasi palsu terdeteksi
-                        if (isFakeLocation) {
-                          // Tampilkan peringatan lokasi palsu
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                title: const Text('Fake Location Detected'),
-                                content: const Text(
-                                    'Please disable fake location to proceed.'),
-                                actions: <Widget>[
-                                  TextButton(
-                                    child: const Text('OK'),
-                                    onPressed: () {
-                                      Navigator.of(context)
-                                          .pop(); // Tutup dialog
-                                    },
-                                  ),
-                                ],
-                              );
-                            },
-                          );
-                        } else {
-                          // masuk page checkin
-                          context.push(const AttendanceCheckinPage());
-                        }
+                    BlocBuilder<GetCompanyBloc, GetCompanyState>(
+                      builder: (context, state) {
+                        final latitudePoint = state.maybeWhen(
+                          orElse: () => 0.0,
+                          success: (data) => double.parse(data.latitude!),
+                        );
+                        final longitudePoint = state.maybeWhen(
+                          orElse: () => 0.0,
+                          success: (data) => double.parse(data.longitude!),
+                        );
+
+                        final radiusPoint = state.maybeWhen(
+                          orElse: () => 0.0,
+                          success: (data) => double.parse(data.radiusKm!),
+                        );
+                        return BlocConsumer<IsCheckedinBloc, IsCheckedinState>(
+                          listener: (context, state) {
+                            //
+                          },
+                          builder: (context, state) {
+                            final isCheckin = state.maybeWhen(
+                              orElse: () => false,
+                              success: (data) => data.isCheckedin,
+                            );
+
+                            return MenuButton(
+                              label: 'Datang',
+                              iconPath: Assets.icons.menu.datang.path,
+                              onPressed: () async {
+                                // Deteksi lokasi palsu
+                                // bool isFakeLocation =
+                                //     await DetectFakeLocation().detectFakeLocation();
+                                // bool isFakeLocation =
+                                //     (await Antifakegps().detectFakeLocation())!;
+                                // bool isFakeLocation =
+                                false; //await SafeDevice.isMockLocation;
+                                // Jika lokasi palsu terdeteksi
+                                // if (isFakeLocation) {
+                                //   // Tampilkan peringatan lokasi palsu
+                                //   showDialog(
+                                //     context: context,
+                                //     builder: (BuildContext context) {
+                                //       return AlertDialog(
+                                //         title: const Text('Fake Location Detected'),
+                                //         content: const Text(
+                                //             'Please disable fake location to proceed.'),
+                                //         actions: <Widget>[
+                                //           TextButton(
+                                //             child: const Text('OK'),
+                                //             onPressed: () {
+                                //               Navigator.of(context)
+                                //                   .pop(); // Tutup dialog
+                                //             },
+                                //           ),
+                                //         ],
+                                //       );
+                                //     },
+                                //   );
+                                // } else {
+                                // masuk page checkin
+
+                                final distanceKm =
+                                    RadiusCalculate.calculateDistance(
+                                        latitude ?? 0.0,
+                                        longitude ?? 0.0,
+                                        latitudePoint,
+                                        longitudePoint);
+
+                                print('jarak radius:  $distanceKm');
+
+                                if (distanceKm > radiusPoint) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content:
+                                          Text('Anda diluar jangkauan absen'),
+                                      backgroundColor: AppColors.red,
+                                    ),
+                                  );
+                                  return;
+                                }
+
+                                if (isCheckin) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text('Anda sudah checkin'),
+                                      backgroundColor: AppColors.red,
+                                    ),
+                                  );
+                                } else {
+                                  context.push(const AttendanceCheckinPage());
+                                }
+
+                                // }
+                              },
+                            );
+                          },
+                        );
                       },
                     ),
-                    MenuButton(
-                      label: 'Pulang',
-                      iconPath: Assets.icons.menu.pulang.path,
-                      onPressed: () async {
-// Deteksi lokasi palsu
-                        bool isFakeLocation =
-                            await DetectFakeLocation().detectFakeLocation();
-                        // Jika lokasi palsu terdeteksi
-                        if (isFakeLocation) {
-                          // Tampilkan peringatan lokasi palsu
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                title: const Text('Fake Location Detected'),
-                                content: const Text(
-                                    'Please disable fake location to proceed.'),
-                                actions: <Widget>[
-                                  TextButton(
-                                    child: const Text('OK'),
-                                    onPressed: () {
-                                      Navigator.of(context)
-                                          .pop(); // Tutup dialog
-                                    },
-                                  ),
-                                ],
-                              );
-                            },
-                          );
-                        } else {
-                          // masuk page checkin
-                          context.push(const AttendanceCheckoutPage());
-                        }
+                    BlocBuilder<GetCompanyBloc, GetCompanyState>(
+                      builder: (context, state) {
+                        final latitudePoint = state.maybeWhen(
+                          orElse: () => 0.0,
+                          success: (data) => double.parse(data.latitude!),
+                        );
+                        final longitudePoint = state.maybeWhen(
+                          orElse: () => 0.0,
+                          success: (data) => double.parse(data.longitude!),
+                        );
+
+                        final radiusPoint = state.maybeWhen(
+                          orElse: () => 0.0,
+                          success: (data) => double.parse(data.radiusKm!),
+                        );
+                        return BlocBuilder<IsCheckedinBloc, IsCheckedinState>(
+                          builder: (context, state) {
+                            final isCheckout = state.maybeWhen(
+                              orElse: () => false,
+                              success: (data) => data.isCheckedout,
+                            );
+                            final isCheckIn = state.maybeWhen(
+                              orElse: () => false,
+                              success: (data) => data.isCheckedin,
+                            );
+                            return MenuButton(
+                              label: 'Pulang',
+                              iconPath: Assets.icons.menu.pulang.path,
+                              onPressed: () async {
+                                final distanceKm =
+                                    RadiusCalculate.calculateDistance(
+                                        latitude ?? 0.0,
+                                        longitude ?? 0.0,
+                                        latitudePoint,
+                                        longitudePoint);
+
+                                print('jarak radius:  $distanceKm');
+
+                                if (distanceKm > radiusPoint) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content:
+                                          Text('Anda diluar jangkauan absen'),
+                                      backgroundColor: AppColors.red,
+                                    ),
+                                  );
+                                  return;
+                                }
+                                print("Anda sudah : ${isCheckIn}");
+                                if (!isCheckIn) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text('Anda belum checkin'),
+                                      backgroundColor: AppColors.red,
+                                    ),
+                                  );
+                                } else if (isCheckout) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text('Anda sudah checkout'),
+                                      backgroundColor: AppColors.red,
+                                    ),
+                                  );
+                                } else {
+                                  context.push(const AttendanceCheckoutPage());
+                                }
+                                // Deteksi lokasi palsu
+                                // bool isFakeLocation =
+                                //     await DetectFakeLocation().detectFakeLocation();
+                                // bool isFakeLocation =
+                                false; //await SafeDevice.isMockLocation;
+                                // Jika lokasi palsu terdeteksi
+                                // if (isFakeLocation) {
+                                //   // Tampilkan peringatan lokasi palsu
+                                //   showDialog(
+                                //     context: context,
+                                //     builder: (BuildContext context) {
+                                //       return AlertDialog(
+                                //         title: const Text('Fake Location Detected'),
+                                //         content: const Text(
+                                //             'Please disable fake location to proceed.'),
+                                //         actions: <Widget>[
+                                //           TextButton(
+                                //             child: const Text('OK'),
+                                //             onPressed: () {
+                                //               Navigator.of(context)
+                                //                   .pop(); // Tutup dialog
+                                //             },
+                                //           ),
+                                //         ],
+                                //       );
+                                //     },
+                                //   );
+                                // } else {
+                                //   // masuk page checkin
+                                //   context.push(const AttendanceCheckoutPage());
+                                // }
+                              },
+                            );
+                          },
+                        );
                       },
                     ),
                     MenuButton(
                       label: 'Izin',
                       iconPath: Assets.icons.menu.izin.path,
-                      onPressed: () {},
+                      onPressed: () {
+                        context.push(const PermissionPage());
+                      },
                     ),
                     MenuButton(
                       label: 'Catatan',
@@ -246,13 +432,75 @@ class _HomePageState extends State<HomePage> {
               ),
               const SpaceHeight(24.0),
               faceEmbedding != null
-                  ? Button.filled(
-                      onPressed: () {
-                        context.push(const SettingPage());
+                  ? BlocBuilder<IsCheckedinBloc, IsCheckedinState>(
+                      builder: (context, state) {
+                        final isCheckout = state.maybeWhen(
+                          orElse: () => false,
+                          success: (data) => data.isCheckedout,
+                        );
+                        final isCheckIn = state.maybeWhen(
+                          orElse: () => false,
+                          success: (data) => data.isCheckedin,
+                        );
+                        return BlocBuilder<GetCompanyBloc, GetCompanyState>(
+                          builder: (context, state) {
+                            final latitudePoint = state.maybeWhen(
+                              orElse: () => 0.0,
+                              success: (data) => double.parse(data.latitude!),
+                            );
+                            final longitudePoint = state.maybeWhen(
+                              orElse: () => 0.0,
+                              success: (data) => double.parse(data.longitude!),
+                            );
+
+                            final radiusPoint = state.maybeWhen(
+                              orElse: () => 0.0,
+                              success: (data) => double.parse(data.radiusKm!),
+                            );
+                            return Button.filled(
+                              onPressed: () {
+                                final distanceKm =
+                                    RadiusCalculate.calculateDistance(
+                                        latitude ?? 0.0,
+                                        longitude ?? 0.0,
+                                        latitudePoint,
+                                        longitudePoint);
+
+                                print('jarak radius:  $distanceKm');
+
+                                if (distanceKm > radiusPoint) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content:
+                                          Text('Anda diluar jangkauan absen'),
+                                      backgroundColor: AppColors.red,
+                                    ),
+                                  );
+                                  return;
+                                }
+
+                                if (!isCheckIn) {
+                                  context.push(const AttendanceCheckinPage());
+                                } else if (!isCheckout) {
+                                  context.push(const AttendanceCheckoutPage());
+                                } else {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text('Anda sudah checkout'),
+                                      backgroundColor: AppColors.red,
+                                    ),
+                                  );
+                                }
+
+                                // context.push(const SettingPage());
+                              },
+                              label: 'Attendance Using Face ID',
+                              icon: Assets.icons.attendance.svg(),
+                              color: AppColors.primary,
+                            );
+                          },
+                        );
                       },
-                      label: 'Attendance Using Face ID',
-                      icon: Assets.icons.attendance.svg(),
-                      color: AppColors.primary,
                     )
                   : Button.filled(
                       onPressed: () {

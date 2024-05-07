@@ -1,7 +1,8 @@
 import 'package:bloc/bloc.dart';
+import 'package:fic16_absensi/ui/home/models/absent_status.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../../../data/datasources/attendance_remote_datasource.dart';
+import 'package:fic16_absensi/data/datasources/attendance_remote_datasource.dart';
 
 part 'is_checkedin_bloc.freezed.dart';
 part 'is_checkedin_event.dart';
@@ -17,7 +18,10 @@ class IsCheckedinBloc extends Bloc<IsCheckedinEvent, IsCheckedinState> {
       final result = await datasource.isCheckedin();
       result.fold(
         (l) => emit(_Error(l)),
-        (r) => emit(_Success(r)),
+        (r) => emit(_Success(AbsentStatus(
+          isCheckedin: r.$1,
+          isCheckedout: r.$2,
+        ))),
       );
     });
   }

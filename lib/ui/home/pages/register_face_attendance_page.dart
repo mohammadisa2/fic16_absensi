@@ -144,9 +144,10 @@ class _RegisterFaceAttendencePageState
       description.sensorOrientation,
     );
 
-    final inputImageFormat =
-        InputImageFormatValue.fromRawValue(frame!.format.raw) ??
-            InputImageFormat.yuv420;
+    // final inputImageFormat =
+    //     InputImageFormatValue.fromRawValue(frame!.format.raw) ??
+    //         InputImageFormat.yuv420;
+    const inputImageFormat = InputImageFormat.yuv_420_888;
 
     final int bytesPerRow =
         frame?.planes.isNotEmpty == true ? frame!.planes.first.bytesPerRow : 0;

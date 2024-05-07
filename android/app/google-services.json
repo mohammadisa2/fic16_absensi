@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "612161486871",
+    "project_id": "fic16-absensi",
+    "storage_bucket": "fic16-absensi.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:612161486871:android:83ccdb49e3f7bea87f5c52",
+        "android_client_info": {
+          "package_name": "com.example.fic16_absensi"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDlr_I1e0rNHc6_Zk8NDgppcFqWtLRHQ-Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
