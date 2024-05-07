@@ -21,8 +21,20 @@ class $AssetsIconsGen {
   /// File path: assets/icons/back.svg
   SvgGenImage get back => const SvgGenImage('assets/icons/back.svg');
 
+  /// File path: assets/icons/calendar.svg
+  SvgGenImage get calendar => const SvgGenImage('assets/icons/calendar.svg');
+
+  /// File path: assets/icons/edit.svg
+  SvgGenImage get edit => const SvgGenImage('assets/icons/edit.svg');
+
   /// File path: assets/icons/email.svg
   SvgGenImage get email => const SvgGenImage('assets/icons/email.svg');
+
+  /// File path: assets/icons/image.svg
+  SvgGenImage get image => const SvgGenImage('assets/icons/image.svg');
+
+  /// File path: assets/icons/location.svg
+  SvgGenImage get location => const SvgGenImage('assets/icons/location.svg');
 
   $AssetsIconsMenuGen get menu => const $AssetsIconsMenuGen();
   $AssetsIconsNavGen get nav => const $AssetsIconsNavGen();
@@ -38,8 +50,18 @@ class $AssetsIconsGen {
   SvgGenImage get reverse => const SvgGenImage('assets/icons/reverse.svg');
 
   /// List of all assets
-  List<SvgGenImage> get values =>
-      [attendance, back, email, notificationRounded, password, reverse];
+  List<SvgGenImage> get values => [
+        attendance,
+        back,
+        calendar,
+        edit,
+        email,
+        image,
+        location,
+        notificationRounded,
+        password,
+        reverse
+      ];
 }
 
 class $AssetsImagesGen {
@@ -47,6 +69,10 @@ class $AssetsImagesGen {
 
   /// File path: assets/images/bg_home.png
   AssetGenImage get bgHome => const AssetGenImage('assets/images/bg_home.png');
+
+  /// File path: assets/images/empty_state.png
+  AssetGenImage get emptyState =>
+      const AssetGenImage('assets/images/empty_state.png');
 
   /// File path: assets/images/failed.png
   AssetGenImage get failed => const AssetGenImage('assets/images/failed.png');
@@ -66,6 +92,10 @@ class $AssetsImagesGen {
   AssetGenImage get logoWhite =>
       const AssetGenImage('assets/images/logo_white.png');
 
+  /// File path: assets/images/notification.png
+  AssetGenImage get notification =>
+      const AssetGenImage('assets/images/notification.png');
+
   /// File path: assets/images/see_location.png
   AssetGenImage get seeLocation =>
       const AssetGenImage('assets/images/see_location.png');
@@ -76,11 +106,13 @@ class $AssetsImagesGen {
   /// List of all assets
   List<AssetGenImage> get values => [
         bgHome,
+        emptyState,
         failed,
         imgMyLocation,
         logo,
         logoCodeWithBahri,
         logoWhite,
+        notification,
         seeLocation,
         success
       ];
@@ -136,10 +168,6 @@ class Assets {
 
   static const $AssetsIconsGen icons = $AssetsIconsGen();
   static const $AssetsImagesGen images = $AssetsImagesGen();
-  static const String mobileFaceNet = 'assets/mobile_face_net.tflite';
-
-  /// List of all assets
-  static List<String> get values => [mobileFaceNet];
 }
 
 class AssetGenImage {

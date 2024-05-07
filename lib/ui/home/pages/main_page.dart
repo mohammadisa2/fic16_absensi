@@ -1,3 +1,5 @@
+import 'package:fic16_absensi/ui/home/pages/history_page.dart';
+import 'package:fic16_absensi/ui/home/pages/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:fic16_absensi/ui/home/pages/home_page.dart';
 import 'package:fic16_absensi/ui/home/pages/setting_page.dart';
@@ -16,9 +18,9 @@ class _MainPageState extends State<MainPage> {
   final _widgets = [
     // const HomePage(),
     const HomePage(),
-    const Center(child: Text('This is history page')),
+    const HistoryPage(),
     const SettingPage(),
-    const Center(child: Text('This is profile page')),
+    const ProfilePage()
   ];
   @override
   Widget build(BuildContext context) {

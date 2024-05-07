@@ -146,7 +146,7 @@ class _RegisterFaceAttendencePageState
 
     final inputImageFormat =
         InputImageFormatValue.fromRawValue(frame!.format.raw) ??
-            InputImageFormat.nv21;
+            InputImageFormat.yuv420;
 
     final int bytesPerRow =
         frame?.planes.isNotEmpty == true ? frame!.planes.first.bytesPerRow : 0;
