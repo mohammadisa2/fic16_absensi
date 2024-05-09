@@ -72,8 +72,9 @@ class _AttendanceCheckinPageState extends State<AttendanceCheckinPage> {
     _controller = CameraController(
       description,
       ResolutionPreset.low,
+      fps: 60,
       enableAudio: false,
-      imageFormatGroup: ImageFormatGroup.yuv420,
+      imageFormatGroup: ImageFormatGroup.bgra8888,
     );
     await _controller!.initialize().then((_) {
       if (!mounted) {

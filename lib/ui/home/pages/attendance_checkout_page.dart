@@ -58,7 +58,13 @@ class _AttendanceCheckoutPageState extends State<AttendanceCheckoutPage> {
 
   _initializeCamera() async {
     _availableCameras = await availableCameras();
-    _controller = CameraController(description, ResolutionPreset.high);
+    _controller = CameraController(
+      description,
+      ResolutionPreset.low,
+      fps: 60,
+      enableAudio: false,
+      imageFormatGroup: ImageFormatGroup.bgra8888,
+    );
     await _controller!.initialize().then((_) {
       if (!mounted) {
         return;

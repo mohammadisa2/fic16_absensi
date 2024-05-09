@@ -1,5 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'package:fic16_absensi/ui/home/pages/notes_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fic16_absensi/core/helper/radius_calculate.dart';
@@ -328,10 +329,11 @@ class _HomePageState extends State<HomePage> {
                               onPressed: () async {
                                 final distanceKm =
                                     RadiusCalculate.calculateDistance(
-                                        latitude ?? 0.0,
-                                        longitude ?? 0.0,
-                                        latitudePoint,
-                                        longitudePoint);
+                                  latitude ?? 0.0,
+                                  longitude ?? 0.0,
+                                  latitudePoint,
+                                  longitudePoint,
+                                );
                                 final position =
                                     await Geolocator.getCurrentPosition();
 
@@ -391,7 +393,9 @@ class _HomePageState extends State<HomePage> {
                     MenuButton(
                       label: 'Catatan',
                       iconPath: Assets.icons.menu.catatan.path,
-                      onPressed: () {},
+                      onPressed: () {
+                        context.push(const NotesPage());
+                      },
                     ),
                   ],
                 ),

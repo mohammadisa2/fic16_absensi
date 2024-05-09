@@ -70,6 +70,10 @@ class $AssetsImagesGen {
   /// File path: assets/images/bg_home.png
   AssetGenImage get bgHome => const AssetGenImage('assets/images/bg_home.png');
 
+  /// File path: assets/images/empty_state.png
+  AssetGenImage get emptyState =>
+      const AssetGenImage('assets/images/empty_state.png');
+
   /// File path: assets/images/failed.png
   AssetGenImage get failed => const AssetGenImage('assets/images/failed.png');
 
@@ -98,6 +102,7 @@ class $AssetsImagesGen {
   /// List of all assets
   List<AssetGenImage> get values => [
         bgHome,
+        emptyState,
         failed,
         imgMyLocation,
         logo,

@@ -66,6 +66,9 @@ class MyApp extends StatelessWidget {
           create: (context) => AddPermissionBloc(PermissonRemoteDatasource()),
         ),
         BlocProvider(
+          create: (context) => IsCheckedinBloc(AttendanceRemoteDatasource()),
+        ),
+        BlocProvider(
           create: (context) =>
               GetAttendanceByDateBloc(AttendanceRemoteDatasource()),
         ),

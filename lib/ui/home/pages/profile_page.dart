@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/core.dart';
+import '../../../data/datasources/auth_local_datasource.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -56,14 +57,25 @@ class ProfilePage extends StatelessWidget {
                 ),
               ),
               const SpaceHeight(45.0),
-              const Text(
-                'hera@geoface.id | +6285806391116',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: AppColors.white,
-                  fontSize: 16.0,
-                  fontWeight: FontWeight.w500,
-                ),
+              FutureBuilder(
+                future: AuthLocalDatasource().getAuthData(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Text('Loading...');
+                  } else {
+                    final user = snapshot.data?.user;
+                    return Text(
+                      '${user?.name ?? ''} | ${user?.phone ?? ''}',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: AppColors.white,
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      maxLines: 2,
+                    );
+                  }
+                },
               ),
               const SpaceHeight(140.0),
               const Text(
