@@ -8,6 +8,8 @@ import 'package:fic16_absensi/data/models/response/checkinout_response_model.dar
 import 'package:fic16_absensi/data/models/response/company_response_model.dart';
 import 'package:http/http.dart' as http;
 
+import '../models/response/attendance_response_model.dart';
+
 class AttendanceRemoteDatasource {
   Future<Either<String, CompanyResponseModel>> getCompanyProfile() async {
     final authData = await AuthLocalDatasource().getAuthData();
@@ -90,6 +92,27 @@ class AttendanceRemoteDatasource {
       return Right(CheckInOutResponseModel.fromJson(response.body));
     } else {
       return const Left('Failed to checkin');
+    }
+  }
+
+  Future<Either<String, AttendanceResponseModel>> getAttendance(
+      String date) async {
+    final authData = await AuthLocalDatasource().getAuthData();
+    final url =
+        Uri.parse('${Variables.baseUrl}/api/api-attendances?date=$date');
+    final response = await http.get(
+      url,
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${authData?.token}',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      return Right(AttendanceResponseModel.fromJson(response.body));
+    } else {
+      return const Left('Failed to get attendance');
     }
   }
 }

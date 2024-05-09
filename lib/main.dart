@@ -19,6 +19,8 @@ import 'ui/auth/bloc/login/login_bloc.dart';
 import 'ui/auth/pages/splash_page.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'ui/home/bloc/get_attendance_by_date/get_attendance_by_date_bloc.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -62,6 +64,10 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => AddPermissionBloc(PermissonRemoteDatasource()),
+        ),
+        BlocProvider(
+          create: (context) =>
+              GetAttendanceByDateBloc(AttendanceRemoteDatasource()),
         ),
       ],
       child: MaterialApp(

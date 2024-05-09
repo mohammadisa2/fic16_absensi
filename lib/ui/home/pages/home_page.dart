@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fic16_absensi/core/helper/radius_calculate.dart';
@@ -9,6 +11,7 @@ import 'package:fic16_absensi/ui/home/pages/attendance_checkout_page.dart';
 import 'package:fic16_absensi/ui/home/pages/permission_page.dart';
 import 'package:fic16_absensi/ui/home/pages/register_face_attendance_page.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:location/location.dart';
 // import 'package:safe_device/safe_device.dart';
 
@@ -243,35 +246,7 @@ class _HomePageState extends State<HomePage> {
                               iconPath: Assets.icons.menu.datang.path,
                               onPressed: () async {
                                 // Deteksi lokasi palsu
-                                // bool isFakeLocation =
-                                //     await DetectFakeLocation().detectFakeLocation();
-                                // bool isFakeLocation =
-                                //     (await Antifakegps().detectFakeLocation())!;
-                                // bool isFakeLocation =
-                                false; //await SafeDevice.isMockLocation;
-                                // Jika lokasi palsu terdeteksi
-                                // if (isFakeLocation) {
-                                //   // Tampilkan peringatan lokasi palsu
-                                //   showDialog(
-                                //     context: context,
-                                //     builder: (BuildContext context) {
-                                //       return AlertDialog(
-                                //         title: const Text('Fake Location Detected'),
-                                //         content: const Text(
-                                //             'Please disable fake location to proceed.'),
-                                //         actions: <Widget>[
-                                //           TextButton(
-                                //             child: const Text('OK'),
-                                //             onPressed: () {
-                                //               Navigator.of(context)
-                                //                   .pop(); // Tutup dialog
-                                //             },
-                                //           ),
-                                //         ],
-                                //       );
-                                //     },
-                                //   );
-                                // } else {
+
                                 // masuk page checkin
 
                                 final distanceKm =
@@ -281,7 +256,19 @@ class _HomePageState extends State<HomePage> {
                                         latitudePoint,
                                         longitudePoint);
 
-                                print('jarak radius:  $distanceKm');
+                                final position =
+                                    await Geolocator.getCurrentPosition();
+
+                                if (position.isMocked) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content:
+                                          Text('Anda menggunakan lokasi palsu'),
+                                      backgroundColor: AppColors.red,
+                                    ),
+                                  );
+                                  return;
+                                }
 
                                 if (distanceKm > radiusPoint) {
                                   ScaffoldMessenger.of(context).showSnackBar(
@@ -304,8 +291,6 @@ class _HomePageState extends State<HomePage> {
                                 } else {
                                   context.push(const AttendanceCheckinPage());
                                 }
-
-                                // }
                               },
                             );
                           },
@@ -347,6 +332,19 @@ class _HomePageState extends State<HomePage> {
                                         longitude ?? 0.0,
                                         latitudePoint,
                                         longitudePoint);
+                                final position =
+                                    await Geolocator.getCurrentPosition();
+
+                                if (position.isMocked) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content:
+                                          Text('Anda menggunakan lokasi palsu'),
+                                      backgroundColor: AppColors.red,
+                                    ),
+                                  );
+                                  return;
+                                }
 
                                 print('jarak radius:  $distanceKm');
 
@@ -360,7 +358,6 @@ class _HomePageState extends State<HomePage> {
                                   );
                                   return;
                                 }
-                                print("Anda sudah : ${isCheckIn}");
                                 if (!isCheckIn) {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(
@@ -378,37 +375,6 @@ class _HomePageState extends State<HomePage> {
                                 } else {
                                   context.push(const AttendanceCheckoutPage());
                                 }
-                                // Deteksi lokasi palsu
-                                // bool isFakeLocation =
-                                //     await DetectFakeLocation().detectFakeLocation();
-                                // bool isFakeLocation =
-                                false; //await SafeDevice.isMockLocation;
-                                // Jika lokasi palsu terdeteksi
-                                // if (isFakeLocation) {
-                                //   // Tampilkan peringatan lokasi palsu
-                                //   showDialog(
-                                //     context: context,
-                                //     builder: (BuildContext context) {
-                                //       return AlertDialog(
-                                //         title: const Text('Fake Location Detected'),
-                                //         content: const Text(
-                                //             'Please disable fake location to proceed.'),
-                                //         actions: <Widget>[
-                                //           TextButton(
-                                //             child: const Text('OK'),
-                                //             onPressed: () {
-                                //               Navigator.of(context)
-                                //                   .pop(); // Tutup dialog
-                                //             },
-                                //           ),
-                                //         ],
-                                //       );
-                                //     },
-                                //   );
-                                // } else {
-                                //   // masuk page checkin
-                                //   context.push(const AttendanceCheckoutPage());
-                                // }
                               },
                             );
                           },
@@ -458,13 +424,27 @@ class _HomePageState extends State<HomePage> {
                               success: (data) => double.parse(data.radiusKm!),
                             );
                             return Button.filled(
-                              onPressed: () {
+                              onPressed: () async {
                                 final distanceKm =
                                     RadiusCalculate.calculateDistance(
                                         latitude ?? 0.0,
                                         longitude ?? 0.0,
                                         latitudePoint,
                                         longitudePoint);
+
+                                final position =
+                                    await Geolocator.getCurrentPosition();
+
+                                if (position.isMocked) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content:
+                                          Text('Anda menggunakan lokasi palsu'),
+                                      backgroundColor: AppColors.red,
+                                    ),
+                                  );
+                                  return;
+                                }
 
                                 print('jarak radius:  $distanceKm');
 

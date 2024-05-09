@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 
 import '../../../core/assets/assets.dart';
@@ -5,32 +6,42 @@ import '../../../core/components/components.dart';
 import '../../../core/constants/colors.dart';
 
 class HistoryAttendance extends StatelessWidget {
-  const HistoryAttendance({super.key});
+  final String time;
+  final String date;
+  final String statusAbsen;
+  final bool isAttendanceIn;
+  const HistoryAttendance({
+    super.key,
+    required this.time,
+    required this.date,
+    required this.statusAbsen,
+    this.isAttendanceIn = true,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
-        color: AppColors.primary,
+        color: isAttendanceIn ? AppColors.primary : AppColors.red,
         borderRadius: BorderRadius.circular(16.0),
       ),
       child: Column(
         children: [
-          const Row(
+          Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Absensi Datang',
-                style: TextStyle(
+                'Absensi $statusAbsen',
+                style: const TextStyle(
                   fontSize: 16.0,
                   color: AppColors.white,
                   fontWeight: FontWeight.w500,
                 ),
               ),
               Text(
-                '08:00',
-                style: TextStyle(
+                time,
+                style: const TextStyle(
                   color: AppColors.white,
                 ),
               ),
@@ -48,9 +59,9 @@ class HistoryAttendance extends StatelessWidget {
                 ),
               ),
               const Spacer(),
-              const Text(
-                '4 Maret 2024',
-                style: TextStyle(
+              Text(
+                date.substring(0, 10),
+                style: const TextStyle(
                   color: AppColors.white,
                 ),
               ),
