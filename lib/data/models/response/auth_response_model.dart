@@ -1,13 +1,26 @@
 import 'dart:convert';
 
 class AuthResponseModel {
-  final User? user;
-  final String? token;
+  User? user;
+  String? token;
+  Company? company;
 
   AuthResponseModel({
     this.user,
     this.token,
+    this.company,
   });
+
+  AuthResponseModel copyWith({
+    User? user,
+    String? token,
+    Company? company,
+  }) =>
+      AuthResponseModel(
+        user: user ?? this.user,
+        token: token ?? this.token,
+        company: company ?? this.company,
+      );
 
   factory AuthResponseModel.fromJson(String str) =>
       AuthResponseModel.fromMap(json.decode(str));
@@ -18,40 +31,125 @@ class AuthResponseModel {
       AuthResponseModel(
         user: json["user"] == null ? null : User.fromMap(json["user"]),
         token: json["token"],
+        company:
+            json["company"] == null ? null : Company.fromMap(json["company"]),
       );
 
   Map<String, dynamic> toMap() => {
         "user": user?.toMap(),
         "token": token,
+        "company": company?.toMap(),
       };
+}
 
-  AuthResponseModel copyWith({
-    User? user,
-    String? token,
-  }) {
-    return AuthResponseModel(
-      user: user ?? this.user,
-      token: token ?? this.token,
-    );
-  }
+class Company {
+  int? id;
+  String? name;
+  String? email;
+  String? address;
+  String? latitude;
+  String? longitude;
+  String? radiusKm;
+  String? timeIn;
+  String? timeOut;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+
+  Company({
+    this.id,
+    this.name,
+    this.email,
+    this.address,
+    this.latitude,
+    this.longitude,
+    this.radiusKm,
+    this.timeIn,
+    this.timeOut,
+    this.createdAt,
+    this.updatedAt,
+  });
+
+  Company copyWith({
+    int? id,
+    String? name,
+    String? email,
+    String? address,
+    String? latitude,
+    String? longitude,
+    String? radiusKm,
+    String? timeIn,
+    String? timeOut,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+  }) =>
+      Company(
+        id: id ?? this.id,
+        name: name ?? this.name,
+        email: email ?? this.email,
+        address: address ?? this.address,
+        latitude: latitude ?? this.latitude,
+        longitude: longitude ?? this.longitude,
+        radiusKm: radiusKm ?? this.radiusKm,
+        timeIn: timeIn ?? this.timeIn,
+        timeOut: timeOut ?? this.timeOut,
+        createdAt: createdAt ?? this.createdAt,
+        updatedAt: updatedAt ?? this.updatedAt,
+      );
+
+  factory Company.fromJson(String str) => Company.fromMap(json.decode(str));
+
+  String toJson() => json.encode(toMap());
+
+  factory Company.fromMap(Map<String, dynamic> json) => Company(
+        id: json["id"],
+        name: json["name"],
+        email: json["email"],
+        address: json["address"],
+        latitude: json["latitude"],
+        longitude: json["longitude"],
+        radiusKm: json["radius_km"],
+        timeIn: json["time_in"],
+        timeOut: json["time_out"],
+        createdAt: json["created_at"] == null
+            ? null
+            : DateTime.parse(json["created_at"]),
+        updatedAt: json["updated_at"] == null
+            ? null
+            : DateTime.parse(json["updated_at"]),
+      );
+
+  Map<String, dynamic> toMap() => {
+        "id": id,
+        "name": name,
+        "email": email,
+        "address": address,
+        "latitude": latitude,
+        "longitude": longitude,
+        "radius_km": radiusKm,
+        "time_in": timeIn,
+        "time_out": timeOut,
+        "created_at": createdAt?.toIso8601String(),
+        "updated_at": updatedAt?.toIso8601String(),
+      };
 }
 
 class User {
-  final int? id;
-  final String? name;
-  final String? email;
-  final DateTime? emailVerifiedAt;
-  final dynamic twoFactorSecret;
-  final dynamic twoFactorRecoveryCodes;
-  final dynamic twoFactorConfirmedAt;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
-  final dynamic phone;
-  final String? role;
-  final dynamic position;
-  final dynamic department;
-  final dynamic faceEmbedding;
-  final dynamic imageUrl;
+  int? id;
+  String? name;
+  String? email;
+  DateTime? emailVerifiedAt;
+  dynamic twoFactorSecret;
+  dynamic twoFactorRecoveryCodes;
+  dynamic twoFactorConfirmedAt;
+  String? fcmToken;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+  dynamic phone;
+  String? role;
+  String? position;
+  String? department;
+  String? faceEmbedding;
+  dynamic imageUrl;
 
   User({
     this.id,
@@ -61,6 +159,7 @@ class User {
     this.twoFactorSecret,
     this.twoFactorRecoveryCodes,
     this.twoFactorConfirmedAt,
+    this.fcmToken,
     this.createdAt,
     this.updatedAt,
     this.phone,
@@ -70,6 +169,44 @@ class User {
     this.faceEmbedding,
     this.imageUrl,
   });
+
+  User copyWith({
+    int? id,
+    String? name,
+    String? email,
+    DateTime? emailVerifiedAt,
+    dynamic twoFactorSecret,
+    dynamic twoFactorRecoveryCodes,
+    dynamic twoFactorConfirmedAt,
+    String? fcmToken,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    dynamic phone,
+    String? role,
+    String? position,
+    String? department,
+    String? faceEmbedding,
+    dynamic imageUrl,
+  }) =>
+      User(
+        id: id ?? this.id,
+        name: name ?? this.name,
+        email: email ?? this.email,
+        emailVerifiedAt: emailVerifiedAt ?? this.emailVerifiedAt,
+        twoFactorSecret: twoFactorSecret ?? this.twoFactorSecret,
+        twoFactorRecoveryCodes:
+            twoFactorRecoveryCodes ?? this.twoFactorRecoveryCodes,
+        twoFactorConfirmedAt: twoFactorConfirmedAt ?? this.twoFactorConfirmedAt,
+        fcmToken: fcmToken ?? this.fcmToken,
+        createdAt: createdAt ?? this.createdAt,
+        updatedAt: updatedAt ?? this.updatedAt,
+        phone: phone ?? this.phone,
+        role: role ?? this.role,
+        position: position ?? this.position,
+        department: department ?? this.department,
+        faceEmbedding: faceEmbedding ?? this.faceEmbedding,
+        imageUrl: imageUrl ?? this.imageUrl,
+      );
 
   factory User.fromJson(String str) => User.fromMap(json.decode(str));
 
@@ -85,6 +222,7 @@ class User {
         twoFactorSecret: json["two_factor_secret"],
         twoFactorRecoveryCodes: json["two_factor_recovery_codes"],
         twoFactorConfirmedAt: json["two_factor_confirmed_at"],
+        fcmToken: json["fcm_token"],
         createdAt: json["created_at"] == null
             ? null
             : DateTime.parse(json["created_at"]),
@@ -107,6 +245,7 @@ class User {
         "two_factor_secret": twoFactorSecret,
         "two_factor_recovery_codes": twoFactorRecoveryCodes,
         "two_factor_confirmed_at": twoFactorConfirmedAt,
+        "fcm_token": fcmToken,
         "created_at": createdAt?.toIso8601String(),
         "updated_at": updatedAt?.toIso8601String(),
         "phone": phone,

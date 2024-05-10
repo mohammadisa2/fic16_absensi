@@ -98,7 +98,10 @@ class HistoryLocation extends StatelessWidget {
           Button.filled(
             color: AppColors.white.withOpacity(0.5),
             onPressed: () {
-              context.push(const LocationPage());
+              context.push(LocationPage(
+                latitude: latitude,
+                longitude: longitude,
+              ));
             },
             label: 'Lihat di Peta',
             fontSize: 14.0,

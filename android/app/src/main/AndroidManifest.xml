@@ -9,6 +9,8 @@
         android:label="fic16_absensi"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+        <meta-data android:name="com.google.android.geo.API_KEY"
+        android:value="AIzaSyCBNM2H0aeBK-NlpaLfX7DXnHLBdcJKAsk"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"
