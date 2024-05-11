@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fic16_absensi/core/helper/radius_calculate.dart';
 import 'package:fic16_absensi/data/datasources/auth_local_datasource.dart';
-import 'package:fic16_absensi/ui/home/bloc/get_company/get_company_bloc.dart';
 import 'package:fic16_absensi/ui/home/bloc/is_checkedin/is_checkedin_bloc.dart';
 import 'package:fic16_absensi/ui/home/pages/attendance_checkin_page.dart';
 import 'package:fic16_absensi/ui/home/pages/attendance_checkout_page.dart';
@@ -28,14 +27,30 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   String? faceEmbedding;
+  double? latitudeCompany;
+  double? longitudeCompany;
+  double? radiusCompany;
+  String? timeInCompany;
+  String? timeOutCompany;
 
   @override
   void initState() {
-    _initializeFaceEmbedding();
     context.read<IsCheckedinBloc>().add(const IsCheckedinEvent.isCheckedIn());
-    context.read<GetCompanyBloc>().add(const GetCompanyEvent.getCompany());
     super.initState();
     getCurrentPosition();
+    _initializeData();
+  }
+
+  Future<void> _initializeData() async {
+    final authData = await AuthLocalDatasource().getAuthData();
+    if (authData != null && authData.company != null) {
+      latitudeCompany = double.tryParse(authData.company!.latitude ?? '');
+      longitudeCompany = double.tryParse(authData.company!.longitude ?? '');
+      radiusCompany = double.tryParse(authData.company!.radiusKm ?? '');
+      timeInCompany = authData.company!.timeIn ?? '';
+      timeOutCompany = authData.company!.timeOut ?? '';
+      faceEmbedding = authData.user!.faceEmbedding ?? '';
+    }
   }
 
   double? latitude;
@@ -79,21 +94,6 @@ class _HomePageState extends State<HomePage> {
       }
     } catch (e) {
       debugPrint('An unknown error occurred: $e');
-    }
-  }
-
-  Future<void> _initializeFaceEmbedding() async {
-    try {
-      final authData = await AuthLocalDatasource().getAuthData();
-      setState(() {
-        faceEmbedding = authData?.user?.faceEmbedding;
-      });
-    } catch (e) {
-      // Tangani error di sini jika ada masalah dalam mendapatkan authData
-      print('Error fetching auth data: $e');
-      setState(() {
-        faceEmbedding = null; // Atur faceEmbedding ke null jika ada kesalahan
-      });
     }
   }
 
@@ -196,7 +196,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                     const SpaceHeight(6.0),
                     Text(
-                      '${DateTime(2024, 3, 14, 8, 0).toFormattedTime()} - ${DateTime(2024, 3, 14, 16, 0).toFormattedTime()}',
+                      "${timeInCompany} - ${timeOutCompany}",
                       style: const TextStyle(
                         fontWeight: FontWeight.w700,
                         fontSize: 20.0,
@@ -217,168 +217,135 @@ class _HomePageState extends State<HomePage> {
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   children: [
-                    BlocBuilder<GetCompanyBloc, GetCompanyState>(
+                    BlocConsumer<IsCheckedinBloc, IsCheckedinState>(
+                      listener: (context, state) {
+                        //
+                      },
                       builder: (context, state) {
-                        final latitudePoint = state.maybeWhen(
-                          orElse: () => 0.0,
-                          success: (data) => double.parse(data.latitude!),
-                        );
-                        final longitudePoint = state.maybeWhen(
-                          orElse: () => 0.0,
-                          success: (data) => double.parse(data.longitude!),
+                        final isCheckin = state.maybeWhen(
+                          orElse: () => false,
+                          success: (data) => data.isCheckedin,
                         );
 
-                        final radiusPoint = state.maybeWhen(
-                          orElse: () => 0.0,
-                          success: (data) => double.parse(data.radiusKm!),
-                        );
-                        return BlocConsumer<IsCheckedinBloc, IsCheckedinState>(
-                          listener: (context, state) {
-                            //
-                          },
-                          builder: (context, state) {
-                            final isCheckin = state.maybeWhen(
-                              orElse: () => false,
-                              success: (data) => data.isCheckedin,
+                        return MenuButton(
+                          label: 'Datang',
+                          iconPath: Assets.icons.menu.datang.path,
+                          onPressed: () async {
+                            // Deteksi lokasi palsu
+
+                            // masuk page checkin
+
+                            final distanceKm =
+                                RadiusCalculate.calculateDistance(
+                              latitude ?? 0.0,
+                              longitude ?? 0.0,
+                              double.parse(latitudeCompany.toString()),
+                              double.parse(longitudeCompany.toString()),
                             );
 
-                            return MenuButton(
-                              label: 'Datang',
-                              iconPath: Assets.icons.menu.datang.path,
-                              onPressed: () async {
-                                // Deteksi lokasi palsu
+                            final position =
+                                await Geolocator.getCurrentPosition();
 
-                                // masuk page checkin
+                            if (position.isMocked) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content:
+                                      Text('Anda menggunakan lokasi palsu'),
+                                  backgroundColor: AppColors.red,
+                                ),
+                              );
+                              return;
+                            }
 
-                                final distanceKm =
-                                    RadiusCalculate.calculateDistance(
-                                        latitude ?? 0.0,
-                                        longitude ?? 0.0,
-                                        latitudePoint,
-                                        longitudePoint);
+                            if (distanceKm >
+                                double.parse(radiusCompany.toString())) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('Anda diluar jangkauan absen'),
+                                  backgroundColor: AppColors.red,
+                                ),
+                              );
+                              return;
+                            }
 
-                                final position =
-                                    await Geolocator.getCurrentPosition();
-
-                                if (position.isMocked) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      content:
-                                          Text('Anda menggunakan lokasi palsu'),
-                                      backgroundColor: AppColors.red,
-                                    ),
-                                  );
-                                  return;
-                                }
-
-                                if (distanceKm > radiusPoint) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      content:
-                                          Text('Anda diluar jangkauan absen'),
-                                      backgroundColor: AppColors.red,
-                                    ),
-                                  );
-                                  return;
-                                }
-
-                                if (isCheckin) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      content: Text('Anda sudah checkin'),
-                                      backgroundColor: AppColors.red,
-                                    ),
-                                  );
-                                } else {
-                                  context.push(const AttendanceCheckinPage());
-                                }
-                              },
-                            );
+                            if (isCheckin) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('Anda sudah checkin'),
+                                  backgroundColor: AppColors.red,
+                                ),
+                              );
+                            } else {
+                              context.push(const AttendanceCheckinPage());
+                            }
                           },
                         );
                       },
                     ),
-                    BlocBuilder<GetCompanyBloc, GetCompanyState>(
+                    BlocBuilder<IsCheckedinBloc, IsCheckedinState>(
                       builder: (context, state) {
-                        final latitudePoint = state.maybeWhen(
-                          orElse: () => 0.0,
-                          success: (data) => double.parse(data.latitude!),
+                        final isCheckout = state.maybeWhen(
+                          orElse: () => false,
+                          success: (data) => data.isCheckedout,
                         );
-                        final longitudePoint = state.maybeWhen(
-                          orElse: () => 0.0,
-                          success: (data) => double.parse(data.longitude!),
+                        final isCheckIn = state.maybeWhen(
+                          orElse: () => false,
+                          success: (data) => data.isCheckedin,
                         );
-
-                        final radiusPoint = state.maybeWhen(
-                          orElse: () => 0.0,
-                          success: (data) => double.parse(data.radiusKm!),
-                        );
-                        return BlocBuilder<IsCheckedinBloc, IsCheckedinState>(
-                          builder: (context, state) {
-                            final isCheckout = state.maybeWhen(
-                              orElse: () => false,
-                              success: (data) => data.isCheckedout,
+                        return MenuButton(
+                          label: 'Pulang',
+                          iconPath: Assets.icons.menu.pulang.path,
+                          onPressed: () async {
+                            final distanceKm =
+                                RadiusCalculate.calculateDistance(
+                              latitude ?? 0.0,
+                              longitude ?? 0.0,
+                              double.parse(latitudeCompany.toString()),
+                              double.parse(longitudeCompany.toString()),
                             );
-                            final isCheckIn = state.maybeWhen(
-                              orElse: () => false,
-                              success: (data) => data.isCheckedin,
-                            );
-                            return MenuButton(
-                              label: 'Pulang',
-                              iconPath: Assets.icons.menu.pulang.path,
-                              onPressed: () async {
-                                final distanceKm =
-                                    RadiusCalculate.calculateDistance(
-                                  latitude ?? 0.0,
-                                  longitude ?? 0.0,
-                                  latitudePoint,
-                                  longitudePoint,
-                                );
-                                final position =
-                                    await Geolocator.getCurrentPosition();
+                            final position =
+                                await Geolocator.getCurrentPosition();
 
-                                if (position.isMocked) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      content:
-                                          Text('Anda menggunakan lokasi palsu'),
-                                      backgroundColor: AppColors.red,
-                                    ),
-                                  );
-                                  return;
-                                }
+                            if (position.isMocked) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content:
+                                      Text('Anda menggunakan lokasi palsu'),
+                                  backgroundColor: AppColors.red,
+                                ),
+                              );
+                              return;
+                            }
 
-                                print('jarak radius:  $distanceKm');
+                            print('jarak radius:  $distanceKm');
 
-                                if (distanceKm > radiusPoint) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      content:
-                                          Text('Anda diluar jangkauan absen'),
-                                      backgroundColor: AppColors.red,
-                                    ),
-                                  );
-                                  return;
-                                }
-                                if (!isCheckIn) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      content: Text('Anda belum checkin'),
-                                      backgroundColor: AppColors.red,
-                                    ),
-                                  );
-                                } else if (isCheckout) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      content: Text('Anda sudah checkout'),
-                                      backgroundColor: AppColors.red,
-                                    ),
-                                  );
-                                } else {
-                                  context.push(const AttendanceCheckoutPage());
-                                }
-                              },
-                            );
+                            if (distanceKm >
+                                double.parse(radiusCompany.toString())) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('Anda diluar jangkauan absen'),
+                                  backgroundColor: AppColors.red,
+                                ),
+                              );
+                              return;
+                            }
+                            if (!isCheckIn) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('Anda belum checkin'),
+                                  backgroundColor: AppColors.red,
+                                ),
+                              );
+                            } else if (isCheckout) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('Anda sudah checkout'),
+                                  backgroundColor: AppColors.red,
+                                ),
+                              );
+                            } else {
+                              context.push(const AttendanceCheckoutPage());
+                            }
                           },
                         );
                       },
@@ -412,77 +379,61 @@ class _HomePageState extends State<HomePage> {
                           orElse: () => false,
                           success: (data) => data.isCheckedin,
                         );
-                        return BlocBuilder<GetCompanyBloc, GetCompanyState>(
-                          builder: (context, state) {
-                            final latitudePoint = state.maybeWhen(
-                              orElse: () => 0.0,
-                              success: (data) => double.parse(data.latitude!),
+                        return Button.filled(
+                          onPressed: () async {
+                            final distanceKm =
+                                RadiusCalculate.calculateDistance(
+                              latitude ?? 0.0,
+                              longitude ?? 0.0,
+                              double.parse(latitudeCompany.toString()),
+                              double.parse(longitudeCompany.toString()),
                             );
-                            final longitudePoint = state.maybeWhen(
-                              orElse: () => 0.0,
-                              success: (data) => double.parse(data.longitude!),
-                            );
 
-                            final radiusPoint = state.maybeWhen(
-                              orElse: () => 0.0,
-                              success: (data) => double.parse(data.radiusKm!),
-                            );
-                            return Button.filled(
-                              onPressed: () async {
-                                final distanceKm =
-                                    RadiusCalculate.calculateDistance(
-                                        latitude ?? 0.0,
-                                        longitude ?? 0.0,
-                                        latitudePoint,
-                                        longitudePoint);
+                            final position =
+                                await Geolocator.getCurrentPosition();
 
-                                final position =
-                                    await Geolocator.getCurrentPosition();
+                            if (position.isMocked) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content:
+                                      Text('Anda menggunakan lokasi palsu'),
+                                  backgroundColor: AppColors.red,
+                                ),
+                              );
+                              return;
+                            }
 
-                                if (position.isMocked) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      content:
-                                          Text('Anda menggunakan lokasi palsu'),
-                                      backgroundColor: AppColors.red,
-                                    ),
-                                  );
-                                  return;
-                                }
+                            print('jarak radius:  $distanceKm');
 
-                                print('jarak radius:  $distanceKm');
+                            if (distanceKm >
+                                double.parse(radiusCompany.toString())) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('Anda diluar jangkauan absen'),
+                                  backgroundColor: AppColors.red,
+                                ),
+                              );
+                              return;
+                            }
 
-                                if (distanceKm > radiusPoint) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      content:
-                                          Text('Anda diluar jangkauan absen'),
-                                      backgroundColor: AppColors.red,
-                                    ),
-                                  );
-                                  return;
-                                }
+                            if (!isCheckIn) {
+                              context.push(const AttendanceCheckinPage());
+                            } else if (!isCheckout) {
+                              context.push(const AttendanceCheckoutPage());
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('Anda sudah checkout'),
+                                  backgroundColor: AppColors.red,
+                                ),
+                              );
+                            }
 
-                                if (!isCheckIn) {
-                                  context.push(const AttendanceCheckinPage());
-                                } else if (!isCheckout) {
-                                  context.push(const AttendanceCheckoutPage());
-                                } else {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      content: Text('Anda sudah checkout'),
-                                      backgroundColor: AppColors.red,
-                                    ),
-                                  );
-                                }
-
-                                // context.push(const SettingPage());
-                              },
-                              label: 'Attendance Using Face ID',
-                              icon: Assets.icons.attendance.svg(),
-                              color: AppColors.primary,
-                            );
+                            // context.push(const SettingPage());
                           },
+                          label: 'Attendance Using Face ID',
+                          icon: Assets.icons.attendance.svg(),
+                          color: AppColors.primary,
                         );
                       },
                     )

@@ -64,8 +64,9 @@ class ProfilePage extends StatelessWidget {
                     return const Text('Loading...');
                   } else {
                     final user = snapshot.data?.user;
+                    final company = snapshot.data?.company;
                     return Text(
-                      '${user?.name ?? ''} | ${user?.phone ?? ''}',
+                      '${user?.name ?? ''} | ${company?.name ?? ''}',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: AppColors.white,

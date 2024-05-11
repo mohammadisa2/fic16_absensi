@@ -9,7 +9,6 @@ import 'package:fic16_absensi/ui/auth/bloc/logout/logout_bloc.dart';
 import 'package:fic16_absensi/ui/home/bloc/add_permission/add_permission_bloc.dart';
 import 'package:fic16_absensi/ui/home/bloc/checkin_attendance/checkin_attendance_bloc.dart';
 import 'package:fic16_absensi/ui/home/bloc/checkout_attendance/checkout_attendance_bloc.dart';
-import 'package:fic16_absensi/ui/home/bloc/get_company/get_company_bloc.dart';
 import 'package:fic16_absensi/ui/home/bloc/is_checkedin/is_checkedin_bloc.dart';
 import 'package:fic16_absensi/ui/home/bloc/update_user_register_face/update_user_register_face_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -49,9 +48,6 @@ class MyApp extends StatelessWidget {
               UpdateUserRegisterFaceBloc(AuthRemoteDatasource()),
         ),
         BlocProvider(
-          create: (context) => GetCompanyBloc(AttendanceRemoteDatasource()),
-        ),
-        BlocProvider(
           create: (context) => IsCheckedinBloc(AttendanceRemoteDatasource()),
         ),
         BlocProvider(
@@ -64,9 +60,6 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => AddPermissionBloc(PermissonRemoteDatasource()),
-        ),
-        BlocProvider(
-          create: (context) => IsCheckedinBloc(AttendanceRemoteDatasource()),
         ),
         BlocProvider(
           create: (context) =>
