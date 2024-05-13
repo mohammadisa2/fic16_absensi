@@ -26,6 +26,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  String? nameProfile;
   String? faceEmbedding;
   double? latitudeCompany;
   double? longitudeCompany;
@@ -47,9 +48,13 @@ class _HomePageState extends State<HomePage> {
       latitudeCompany = double.tryParse(authData.company!.latitude ?? '');
       longitudeCompany = double.tryParse(authData.company!.longitude ?? '');
       radiusCompany = double.tryParse(authData.company!.radiusKm ?? '');
-      timeInCompany = authData.company!.timeIn ?? '';
-      timeOutCompany = authData.company!.timeOut ?? '';
-      faceEmbedding = authData.user!.faceEmbedding ?? '';
+      timeInCompany = authData.company!.timeIn;
+      timeOutCompany = authData.company!.timeOut;
+      faceEmbedding = authData.user!.faceEmbedding;
+    }
+
+    if (authData != null && authData.user != null) {
+      nameProfile = authData.user!.name;
     }
   }
 
@@ -126,32 +131,13 @@ class _HomePageState extends State<HomePage> {
                   ),
                   const SpaceWidth(12.0),
                   Expanded(
-                    child: FutureBuilder(
-                      future: AuthLocalDatasource().getAuthData(),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return const Text('Loading...');
-                        } else {
-                          final user = snapshot.data?.user;
-                          return Text(
-                            'Hello, ${user?.name ?? 'Hello, Chopper Sensei'}',
-                            style: const TextStyle(
-                              fontSize: 18.0,
-                              color: AppColors.white,
-                            ),
-                            maxLines: 2,
-                          );
-                        }
-                      },
-                      // child: Text(
-                      //   'Hello, Chopper Sensei',
-                      //   style: TextStyle(
-                      //     fontSize: 18.0,
-                      //     color: AppColors.white,
-                      //   ),
-                      //   maxLines: 2,
-                      // ),
+                    child: Text(
+                      'Hello, ${nameProfile ?? 'Hello, Chopper Sensei'}',
+                      style: const TextStyle(
+                        fontSize: 18.0,
+                        color: AppColors.white,
+                      ),
+                      maxLines: 2,
                     ),
                   ),
                   IconButton(
@@ -217,15 +203,14 @@ class _HomePageState extends State<HomePage> {
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   children: [
-                    BlocConsumer<IsCheckedinBloc, IsCheckedinState>(
-                      listener: (context, state) {
-                        //
-                      },
+                    BlocBuilder<IsCheckedinBloc, IsCheckedinState>(
                       builder: (context, state) {
-                        final isCheckin = state.maybeWhen(
+                        final isCheckIn = state.maybeWhen(
                           orElse: () => false,
                           success: (data) => data.isCheckedin,
                         );
+
+                        print("Halo anda sudah: $isCheckIn");
 
                         return MenuButton(
                           label: 'Datang',
@@ -268,7 +253,7 @@ class _HomePageState extends State<HomePage> {
                               return;
                             }
 
-                            if (isCheckin) {
+                            if (isCheckIn) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
                                   content: Text('Anda sudah checkin'),
@@ -502,5 +487,10 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 }

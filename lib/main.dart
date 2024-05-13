@@ -1,3 +1,6 @@
+import 'package:fic16_absensi/data/datasources/note_remote_datasource.dart';
+import 'package:fic16_absensi/ui/home/bloc/add_note/add_note_bloc.dart';
+import 'package:fic16_absensi/ui/home/bloc/get_note/get_note_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:fic16_absensi/data/datasources/attendance_remote_datasource.dart';
@@ -64,6 +67,12 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) =>
               GetAttendanceByDateBloc(AttendanceRemoteDatasource()),
+        ),
+        BlocProvider(
+          create: (context) => GetNoteBloc(NoteRemoteDatasource()),
+        ),
+        BlocProvider(
+          create: (context) => AddNoteBloc(NoteRemoteDatasource()),
         ),
       ],
       child: MaterialApp(
