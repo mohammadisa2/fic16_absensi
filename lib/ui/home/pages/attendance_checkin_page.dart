@@ -14,6 +14,7 @@ import 'package:location/location.dart';
 
 import '../../../core/core.dart';
 import '../bloc/checkin_attendance/checkin_attendance_bloc.dart';
+import '../widgets/unauthorized.dart';
 
 class AttendanceCheckinPage extends StatefulWidget {
   const AttendanceCheckinPage({super.key});
@@ -435,10 +436,7 @@ class _AttendanceCheckinPageState extends State<AttendanceCheckinPage> {
                               orElse: () {},
                               error: (message) {
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text(message),
-                                  ),
-                                );
+                                    buildErrorSnackbar(message, context));
                               },
                               loaded: (responseModel) {
                                 context.pushReplacement(

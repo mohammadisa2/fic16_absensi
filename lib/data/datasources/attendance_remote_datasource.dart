@@ -69,6 +69,8 @@ class AttendanceRemoteDatasource {
 
     if (response.statusCode == 200) {
       return Right(CheckInOutResponseModel.fromJson(response.body));
+    } else if (response.statusCode == 401) {
+      return Left(response.reasonPhrase!);
     } else {
       return const Left('Failed to checkin');
     }
