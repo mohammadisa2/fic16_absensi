@@ -4,6 +4,7 @@ import 'package:dartz/dartz.dart';
 import 'package:fic16_absensi/core/constants/variables.dart';
 import 'package:fic16_absensi/data/datasources/auth_local_datasource.dart';
 import 'package:fic16_absensi/data/models/response/auth_response_model.dart';
+import 'package:fic16_absensi/data/models/response/unauthenticated_response_model.dart';
 import 'package:http/http.dart' as http;
 
 import '../models/response/user_response_model.dart';
@@ -32,7 +33,7 @@ class AuthRemoteDatasource {
   }
 
   //logout
-  Future<Either<String, String>> logout() async {
+  Future<Either<UnauthenticatedResponseModel, String>> logout() async {
     final authData = await AuthLocalDatasource().getAuthData();
     final url = Uri.parse('${Variables.baseUrl}/api/logout');
     final response = await http.post(
@@ -45,9 +46,9 @@ class AuthRemoteDatasource {
     );
 
     if (response.statusCode == 200) {
-      return const Right('Logout success');
+      return const Right('Logged in successfully');
     } else {
-      return const Left('Failed to logout');
+      return Left(UnauthenticatedResponseModel.fromJson(response.body));
     }
   }
 

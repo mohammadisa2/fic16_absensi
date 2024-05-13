@@ -32,14 +32,30 @@ class SettingPage extends StatelessWidget {
                 success: (_) {
                   context.pushReplacement(const LoginPage());
                   AuthLocalDatasource().removeAuthData();
-                },
-                error: (value) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(value.error),
-                      backgroundColor: AppColors.red,
+                    const SnackBar(
+                      content: Text("Berhasil Logout"),
+                      backgroundColor: AppColors.primary,
                     ),
                   );
+                },
+                error: (message) {
+                  if (message.error.toString() == 'Unauthenticated.') {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(message.error.toString()),
+                        backgroundColor: AppColors.red,
+                      ),
+                    );
+                    context.pushReplacement(const LoginPage());
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(message.error.toString()),
+                        backgroundColor: AppColors.red,
+                      ),
+                    );
+                  }
                 },
               );
             },
