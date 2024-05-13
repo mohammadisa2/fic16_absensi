@@ -22,6 +22,7 @@ import 'ui/auth/pages/splash_page.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'ui/home/bloc/get_attendance_by_date/get_attendance_by_date_bloc.dart';
+import 'ui/home/bloc/notification/notification_bloc.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -73,6 +74,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => AddNoteBloc(NoteRemoteDatasource()),
+        ),
+        BlocProvider(
+          create: (context) => NotificationBloc(AuthRemoteDatasource()),
         ),
       ],
       child: MaterialApp(

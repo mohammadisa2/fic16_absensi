@@ -1,4 +1,4 @@
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fic16_absensi/data/models/request/checkinout_request_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 

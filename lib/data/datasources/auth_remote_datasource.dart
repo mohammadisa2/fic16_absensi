@@ -4,6 +4,7 @@ import 'package:dartz/dartz.dart';
 import 'package:fic16_absensi/core/constants/variables.dart';
 import 'package:fic16_absensi/data/datasources/auth_local_datasource.dart';
 import 'package:fic16_absensi/data/models/response/auth_response_model.dart';
+import 'package:fic16_absensi/data/models/response/notification_response_model.dart';
 import 'package:fic16_absensi/data/models/response/unauthenticated_response_model.dart';
 import 'package:http/http.dart' as http;
 
@@ -85,5 +86,24 @@ class AuthRemoteDatasource {
         'fcm_token': fcmToken,
       }),
     );
+  }
+
+  Future<Either<String, NotificationResponseModel>> getNotification() async {
+    final authData = await AuthLocalDatasource().getAuthData();
+    final url = Uri.parse('${Variables.baseUrl}/api/api-broadcasts');
+    final response = await http.get(
+      url,
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${authData?.token}',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      return Right(NotificationResponseModel.fromJson(response.body));
+    } else {
+      return const Left('Failed to get notes');
+    }
   }
 }

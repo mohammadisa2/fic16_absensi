@@ -92,6 +92,10 @@ class $AssetsImagesGen {
   AssetGenImage get logoWhite =>
       const AssetGenImage('assets/images/logo_white.png');
 
+  /// File path: assets/images/notification.png
+  AssetGenImage get notification =>
+      const AssetGenImage('assets/images/notification.png');
+
   /// File path: assets/images/see_location.png
   AssetGenImage get seeLocation =>
       const AssetGenImage('assets/images/see_location.png');
@@ -108,6 +112,7 @@ class $AssetsImagesGen {
         logo,
         logoCodeWithBahri,
         logoWhite,
+        notification,
         seeLocation,
         success
       ];

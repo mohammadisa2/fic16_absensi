@@ -15,7 +15,6 @@ class NotesPage extends StatefulWidget {
 class _NotesPageState extends State<NotesPage> {
   @override
   void initState() {
-    // context.read<AddNoteBloc>().add(const AddNoteEvent.getNotes());
     context.read<GetNoteBloc>().add(const GetNoteEvent.getNotes());
     super.initState();
   }

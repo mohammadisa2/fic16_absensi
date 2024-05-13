@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'add_note_bloc.dart';
+part of 'notification_bloc.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,58 +15,58 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
-mixin _$AddNoteEvent {
+mixin _$NotificationEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
-    required TResult Function(String title, String description) addNotes,
+    required TResult Function() getNotif,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
-    TResult? Function(String title, String description)? addNotes,
+    TResult? Function()? getNotif,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
-    TResult Function(String title, String description)? addNotes,
+    TResult Function()? getNotif,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Started value) started,
-    required TResult Function(_AddNotes value) addNotes,
+    required TResult Function(_GetNotif value) getNotif,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Started value)? started,
-    TResult? Function(_AddNotes value)? addNotes,
+    TResult? Function(_GetNotif value)? getNotif,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Started value)? started,
-    TResult Function(_AddNotes value)? addNotes,
+    TResult Function(_GetNotif value)? getNotif,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $AddNoteEventCopyWith<$Res> {
-  factory $AddNoteEventCopyWith(
-          AddNoteEvent value, $Res Function(AddNoteEvent) then) =
-      _$AddNoteEventCopyWithImpl<$Res, AddNoteEvent>;
+abstract class $NotificationEventCopyWith<$Res> {
+  factory $NotificationEventCopyWith(
+          NotificationEvent value, $Res Function(NotificationEvent) then) =
+      _$NotificationEventCopyWithImpl<$Res, NotificationEvent>;
 }
 
 /// @nodoc
-class _$AddNoteEventCopyWithImpl<$Res, $Val extends AddNoteEvent>
-    implements $AddNoteEventCopyWith<$Res> {
-  _$AddNoteEventCopyWithImpl(this._value, this._then);
+class _$NotificationEventCopyWithImpl<$Res, $Val extends NotificationEvent>
+    implements $NotificationEventCopyWith<$Res> {
+  _$NotificationEventCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -83,7 +83,7 @@ abstract class _$$StartedImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$StartedImplCopyWithImpl<$Res>
-    extends _$AddNoteEventCopyWithImpl<$Res, _$StartedImpl>
+    extends _$NotificationEventCopyWithImpl<$Res, _$StartedImpl>
     implements _$$StartedImplCopyWith<$Res> {
   __$$StartedImplCopyWithImpl(
       _$StartedImpl _value, $Res Function(_$StartedImpl) _then)
@@ -97,7 +97,7 @@ class _$StartedImpl implements _Started {
 
   @override
   String toString() {
-    return 'AddNoteEvent.started()';
+    return 'NotificationEvent.started()';
   }
 
   @override
@@ -113,7 +113,7 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
-    required TResult Function(String title, String description) addNotes,
+    required TResult Function() getNotif,
   }) {
     return started();
   }
@@ -122,7 +122,7 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
-    TResult? Function(String title, String description)? addNotes,
+    TResult? Function()? getNotif,
   }) {
     return started?.call();
   }
@@ -131,7 +131,7 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
-    TResult Function(String title, String description)? addNotes,
+    TResult Function()? getNotif,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -144,7 +144,7 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Started value) started,
-    required TResult Function(_AddNotes value) addNotes,
+    required TResult Function(_GetNotif value) getNotif,
   }) {
     return started(this);
   }
@@ -153,7 +153,7 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Started value)? started,
-    TResult? Function(_AddNotes value)? addNotes,
+    TResult? Function(_GetNotif value)? getNotif,
   }) {
     return started?.call(this);
   }
@@ -162,7 +162,7 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Started value)? started,
-    TResult Function(_AddNotes value)? addNotes,
+    TResult Function(_GetNotif value)? getNotif,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -172,107 +172,72 @@ class _$StartedImpl implements _Started {
   }
 }
 
-abstract class _Started implements AddNoteEvent {
+abstract class _Started implements NotificationEvent {
   const factory _Started() = _$StartedImpl;
 }
 
 /// @nodoc
-abstract class _$$AddNotesImplCopyWith<$Res> {
-  factory _$$AddNotesImplCopyWith(
-          _$AddNotesImpl value, $Res Function(_$AddNotesImpl) then) =
-      __$$AddNotesImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({String title, String description});
+abstract class _$$GetNotifImplCopyWith<$Res> {
+  factory _$$GetNotifImplCopyWith(
+          _$GetNotifImpl value, $Res Function(_$GetNotifImpl) then) =
+      __$$GetNotifImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$AddNotesImplCopyWithImpl<$Res>
-    extends _$AddNoteEventCopyWithImpl<$Res, _$AddNotesImpl>
-    implements _$$AddNotesImplCopyWith<$Res> {
-  __$$AddNotesImplCopyWithImpl(
-      _$AddNotesImpl _value, $Res Function(_$AddNotesImpl) _then)
+class __$$GetNotifImplCopyWithImpl<$Res>
+    extends _$NotificationEventCopyWithImpl<$Res, _$GetNotifImpl>
+    implements _$$GetNotifImplCopyWith<$Res> {
+  __$$GetNotifImplCopyWithImpl(
+      _$GetNotifImpl _value, $Res Function(_$GetNotifImpl) _then)
       : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? title = null,
-    Object? description = null,
-  }) {
-    return _then(_$AddNotesImpl(
-      title: null == title
-          ? _value.title
-          : title // ignore: cast_nullable_to_non_nullable
-              as String,
-      description: null == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
 }
 
 /// @nodoc
 
-class _$AddNotesImpl implements _AddNotes {
-  const _$AddNotesImpl({required this.title, required this.description});
-
-  @override
-  final String title;
-  @override
-  final String description;
+class _$GetNotifImpl implements _GetNotif {
+  const _$GetNotifImpl();
 
   @override
   String toString() {
-    return 'AddNoteEvent.addNotes(title: $title, description: $description)';
+    return 'NotificationEvent.getNotif()';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$AddNotesImpl &&
-            (identical(other.title, title) || other.title == title) &&
-            (identical(other.description, description) ||
-                other.description == description));
+        (other.runtimeType == runtimeType && other is _$GetNotifImpl);
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, title, description);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$AddNotesImplCopyWith<_$AddNotesImpl> get copyWith =>
-      __$$AddNotesImplCopyWithImpl<_$AddNotesImpl>(this, _$identity);
+  int get hashCode => runtimeType.hashCode;
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
-    required TResult Function(String title, String description) addNotes,
+    required TResult Function() getNotif,
   }) {
-    return addNotes(title, description);
+    return getNotif();
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
-    TResult? Function(String title, String description)? addNotes,
+    TResult? Function()? getNotif,
   }) {
-    return addNotes?.call(title, description);
+    return getNotif?.call();
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
-    TResult Function(String title, String description)? addNotes,
+    TResult Function()? getNotif,
     required TResult orElse(),
   }) {
-    if (addNotes != null) {
-      return addNotes(title, description);
+    if (getNotif != null) {
+      return getNotif();
     }
     return orElse();
   }
@@ -281,73 +246,62 @@ class _$AddNotesImpl implements _AddNotes {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Started value) started,
-    required TResult Function(_AddNotes value) addNotes,
+    required TResult Function(_GetNotif value) getNotif,
   }) {
-    return addNotes(this);
+    return getNotif(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Started value)? started,
-    TResult? Function(_AddNotes value)? addNotes,
+    TResult? Function(_GetNotif value)? getNotif,
   }) {
-    return addNotes?.call(this);
+    return getNotif?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Started value)? started,
-    TResult Function(_AddNotes value)? addNotes,
+    TResult Function(_GetNotif value)? getNotif,
     required TResult orElse(),
   }) {
-    if (addNotes != null) {
-      return addNotes(this);
+    if (getNotif != null) {
+      return getNotif(this);
     }
     return orElse();
   }
 }
 
-abstract class _AddNotes implements AddNoteEvent {
-  const factory _AddNotes(
-      {required final String title,
-      required final String description}) = _$AddNotesImpl;
-
-  String get title;
-  String get description;
-  @JsonKey(ignore: true)
-  _$$AddNotesImplCopyWith<_$AddNotesImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+abstract class _GetNotif implements NotificationEvent {
+  const factory _GetNotif() = _$GetNotifImpl;
 }
 
 /// @nodoc
-mixin _$AddNoteState {
+mixin _$NotificationState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() loaded,
+    required TResult Function(NotificationResponseModel notifications) loaded,
     required TResult Function(String message) error,
-    required TResult Function() empty,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? loaded,
+    TResult? Function(NotificationResponseModel notifications)? loaded,
     TResult? Function(String message)? error,
-    TResult? Function()? empty,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? loaded,
+    TResult Function(NotificationResponseModel notifications)? loaded,
     TResult Function(String message)? error,
-    TResult Function()? empty,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -357,7 +311,6 @@ mixin _$AddNoteState {
     required TResult Function(_Loading value) loading,
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_Error value) error,
-    required TResult Function(_Empty value) empty,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -366,7 +319,6 @@ mixin _$AddNoteState {
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Loaded value)? loaded,
     TResult? Function(_Error value)? error,
-    TResult? Function(_Empty value)? empty,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -375,23 +327,22 @@ mixin _$AddNoteState {
     TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Error value)? error,
-    TResult Function(_Empty value)? empty,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $AddNoteStateCopyWith<$Res> {
-  factory $AddNoteStateCopyWith(
-          AddNoteState value, $Res Function(AddNoteState) then) =
-      _$AddNoteStateCopyWithImpl<$Res, AddNoteState>;
+abstract class $NotificationStateCopyWith<$Res> {
+  factory $NotificationStateCopyWith(
+          NotificationState value, $Res Function(NotificationState) then) =
+      _$NotificationStateCopyWithImpl<$Res, NotificationState>;
 }
 
 /// @nodoc
-class _$AddNoteStateCopyWithImpl<$Res, $Val extends AddNoteState>
-    implements $AddNoteStateCopyWith<$Res> {
-  _$AddNoteStateCopyWithImpl(this._value, this._then);
+class _$NotificationStateCopyWithImpl<$Res, $Val extends NotificationState>
+    implements $NotificationStateCopyWith<$Res> {
+  _$NotificationStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -408,7 +359,7 @@ abstract class _$$InitialImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$InitialImplCopyWithImpl<$Res>
-    extends _$AddNoteStateCopyWithImpl<$Res, _$InitialImpl>
+    extends _$NotificationStateCopyWithImpl<$Res, _$InitialImpl>
     implements _$$InitialImplCopyWith<$Res> {
   __$$InitialImplCopyWithImpl(
       _$InitialImpl _value, $Res Function(_$InitialImpl) _then)
@@ -422,7 +373,7 @@ class _$InitialImpl implements _Initial {
 
   @override
   String toString() {
-    return 'AddNoteState.initial()';
+    return 'NotificationState.initial()';
   }
 
   @override
@@ -439,9 +390,8 @@ class _$InitialImpl implements _Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() loaded,
+    required TResult Function(NotificationResponseModel notifications) loaded,
     required TResult Function(String message) error,
-    required TResult Function() empty,
   }) {
     return initial();
   }
@@ -451,9 +401,8 @@ class _$InitialImpl implements _Initial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? loaded,
+    TResult? Function(NotificationResponseModel notifications)? loaded,
     TResult? Function(String message)? error,
-    TResult? Function()? empty,
   }) {
     return initial?.call();
   }
@@ -463,9 +412,8 @@ class _$InitialImpl implements _Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? loaded,
+    TResult Function(NotificationResponseModel notifications)? loaded,
     TResult Function(String message)? error,
-    TResult Function()? empty,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -481,7 +429,6 @@ class _$InitialImpl implements _Initial {
     required TResult Function(_Loading value) loading,
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_Error value) error,
-    required TResult Function(_Empty value) empty,
   }) {
     return initial(this);
   }
@@ -493,7 +440,6 @@ class _$InitialImpl implements _Initial {
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Loaded value)? loaded,
     TResult? Function(_Error value)? error,
-    TResult? Function(_Empty value)? empty,
   }) {
     return initial?.call(this);
   }
@@ -505,7 +451,6 @@ class _$InitialImpl implements _Initial {
     TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Error value)? error,
-    TResult Function(_Empty value)? empty,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -515,7 +460,7 @@ class _$InitialImpl implements _Initial {
   }
 }
 
-abstract class _Initial implements AddNoteState {
+abstract class _Initial implements NotificationState {
   const factory _Initial() = _$InitialImpl;
 }
 
@@ -528,7 +473,7 @@ abstract class _$$LoadingImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$LoadingImplCopyWithImpl<$Res>
-    extends _$AddNoteStateCopyWithImpl<$Res, _$LoadingImpl>
+    extends _$NotificationStateCopyWithImpl<$Res, _$LoadingImpl>
     implements _$$LoadingImplCopyWith<$Res> {
   __$$LoadingImplCopyWithImpl(
       _$LoadingImpl _value, $Res Function(_$LoadingImpl) _then)
@@ -542,7 +487,7 @@ class _$LoadingImpl implements _Loading {
 
   @override
   String toString() {
-    return 'AddNoteState.loading()';
+    return 'NotificationState.loading()';
   }
 
   @override
@@ -559,9 +504,8 @@ class _$LoadingImpl implements _Loading {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() loaded,
+    required TResult Function(NotificationResponseModel notifications) loaded,
     required TResult Function(String message) error,
-    required TResult Function() empty,
   }) {
     return loading();
   }
@@ -571,9 +515,8 @@ class _$LoadingImpl implements _Loading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? loaded,
+    TResult? Function(NotificationResponseModel notifications)? loaded,
     TResult? Function(String message)? error,
-    TResult? Function()? empty,
   }) {
     return loading?.call();
   }
@@ -583,9 +526,8 @@ class _$LoadingImpl implements _Loading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? loaded,
+    TResult Function(NotificationResponseModel notifications)? loaded,
     TResult Function(String message)? error,
-    TResult Function()? empty,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -601,7 +543,6 @@ class _$LoadingImpl implements _Loading {
     required TResult Function(_Loading value) loading,
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_Error value) error,
-    required TResult Function(_Empty value) empty,
   }) {
     return loading(this);
   }
@@ -613,7 +554,6 @@ class _$LoadingImpl implements _Loading {
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Loaded value)? loaded,
     TResult? Function(_Error value)? error,
-    TResult? Function(_Empty value)? empty,
   }) {
     return loading?.call(this);
   }
@@ -625,7 +565,6 @@ class _$LoadingImpl implements _Loading {
     TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Error value)? error,
-    TResult Function(_Empty value)? empty,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -635,7 +574,7 @@ class _$LoadingImpl implements _Loading {
   }
 }
 
-abstract class _Loading implements AddNoteState {
+abstract class _Loading implements NotificationState {
   const factory _Loading() = _$LoadingImpl;
 }
 
@@ -644,46 +583,72 @@ abstract class _$$LoadedImplCopyWith<$Res> {
   factory _$$LoadedImplCopyWith(
           _$LoadedImpl value, $Res Function(_$LoadedImpl) then) =
       __$$LoadedImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({NotificationResponseModel notifications});
 }
 
 /// @nodoc
 class __$$LoadedImplCopyWithImpl<$Res>
-    extends _$AddNoteStateCopyWithImpl<$Res, _$LoadedImpl>
+    extends _$NotificationStateCopyWithImpl<$Res, _$LoadedImpl>
     implements _$$LoadedImplCopyWith<$Res> {
   __$$LoadedImplCopyWithImpl(
       _$LoadedImpl _value, $Res Function(_$LoadedImpl) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? notifications = null,
+  }) {
+    return _then(_$LoadedImpl(
+      null == notifications
+          ? _value.notifications
+          : notifications // ignore: cast_nullable_to_non_nullable
+              as NotificationResponseModel,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$LoadedImpl implements _Loaded {
-  const _$LoadedImpl();
+  const _$LoadedImpl(this.notifications);
+
+  @override
+  final NotificationResponseModel notifications;
 
   @override
   String toString() {
-    return 'AddNoteState.loaded()';
+    return 'NotificationState.loaded(notifications: $notifications)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$LoadedImpl);
+        (other.runtimeType == runtimeType &&
+            other is _$LoadedImpl &&
+            (identical(other.notifications, notifications) ||
+                other.notifications == notifications));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, notifications);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$LoadedImplCopyWith<_$LoadedImpl> get copyWith =>
+      __$$LoadedImplCopyWithImpl<_$LoadedImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() loaded,
+    required TResult Function(NotificationResponseModel notifications) loaded,
     required TResult Function(String message) error,
-    required TResult Function() empty,
   }) {
-    return loaded();
+    return loaded(notifications);
   }
 
   @override
@@ -691,11 +656,10 @@ class _$LoadedImpl implements _Loaded {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? loaded,
+    TResult? Function(NotificationResponseModel notifications)? loaded,
     TResult? Function(String message)? error,
-    TResult? Function()? empty,
   }) {
-    return loaded?.call();
+    return loaded?.call(notifications);
   }
 
   @override
@@ -703,13 +667,12 @@ class _$LoadedImpl implements _Loaded {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? loaded,
+    TResult Function(NotificationResponseModel notifications)? loaded,
     TResult Function(String message)? error,
-    TResult Function()? empty,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded();
+      return loaded(notifications);
     }
     return orElse();
   }
@@ -721,7 +684,6 @@ class _$LoadedImpl implements _Loaded {
     required TResult Function(_Loading value) loading,
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_Error value) error,
-    required TResult Function(_Empty value) empty,
   }) {
     return loaded(this);
   }
@@ -733,7 +695,6 @@ class _$LoadedImpl implements _Loaded {
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Loaded value)? loaded,
     TResult? Function(_Error value)? error,
-    TResult? Function(_Empty value)? empty,
   }) {
     return loaded?.call(this);
   }
@@ -745,7 +706,6 @@ class _$LoadedImpl implements _Loaded {
     TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Error value)? error,
-    TResult Function(_Empty value)? empty,
     required TResult orElse(),
   }) {
     if (loaded != null) {
@@ -755,8 +715,14 @@ class _$LoadedImpl implements _Loaded {
   }
 }
 
-abstract class _Loaded implements AddNoteState {
-  const factory _Loaded() = _$LoadedImpl;
+abstract class _Loaded implements NotificationState {
+  const factory _Loaded(final NotificationResponseModel notifications) =
+      _$LoadedImpl;
+
+  NotificationResponseModel get notifications;
+  @JsonKey(ignore: true)
+  _$$LoadedImplCopyWith<_$LoadedImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -770,7 +736,7 @@ abstract class _$$ErrorImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$ErrorImplCopyWithImpl<$Res>
-    extends _$AddNoteStateCopyWithImpl<$Res, _$ErrorImpl>
+    extends _$NotificationStateCopyWithImpl<$Res, _$ErrorImpl>
     implements _$$ErrorImplCopyWith<$Res> {
   __$$ErrorImplCopyWithImpl(
       _$ErrorImpl _value, $Res Function(_$ErrorImpl) _then)
@@ -800,7 +766,7 @@ class _$ErrorImpl implements _Error {
 
   @override
   String toString() {
-    return 'AddNoteState.error(message: $message)';
+    return 'NotificationState.error(message: $message)';
   }
 
   @override
@@ -825,9 +791,8 @@ class _$ErrorImpl implements _Error {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() loaded,
+    required TResult Function(NotificationResponseModel notifications) loaded,
     required TResult Function(String message) error,
-    required TResult Function() empty,
   }) {
     return error(message);
   }
@@ -837,9 +802,8 @@ class _$ErrorImpl implements _Error {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function()? loaded,
+    TResult? Function(NotificationResponseModel notifications)? loaded,
     TResult? Function(String message)? error,
-    TResult? Function()? empty,
   }) {
     return error?.call(message);
   }
@@ -849,9 +813,8 @@ class _$ErrorImpl implements _Error {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? loaded,
+    TResult Function(NotificationResponseModel notifications)? loaded,
     TResult Function(String message)? error,
-    TResult Function()? empty,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -867,7 +830,6 @@ class _$ErrorImpl implements _Error {
     required TResult Function(_Loading value) loading,
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_Error value) error,
-    required TResult Function(_Empty value) empty,
   }) {
     return error(this);
   }
@@ -879,7 +841,6 @@ class _$ErrorImpl implements _Error {
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Loaded value)? loaded,
     TResult? Function(_Error value)? error,
-    TResult? Function(_Empty value)? empty,
   }) {
     return error?.call(this);
   }
@@ -891,7 +852,6 @@ class _$ErrorImpl implements _Error {
     TResult Function(_Loading value)? loading,
     TResult Function(_Loaded value)? loaded,
     TResult Function(_Error value)? error,
-    TResult Function(_Empty value)? empty,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -901,131 +861,11 @@ class _$ErrorImpl implements _Error {
   }
 }
 
-abstract class _Error implements AddNoteState {
+abstract class _Error implements NotificationState {
   const factory _Error(final String message) = _$ErrorImpl;
 
   String get message;
   @JsonKey(ignore: true)
   _$$ErrorImplCopyWith<_$ErrorImpl> get copyWith =>
       throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$EmptyImplCopyWith<$Res> {
-  factory _$$EmptyImplCopyWith(
-          _$EmptyImpl value, $Res Function(_$EmptyImpl) then) =
-      __$$EmptyImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$EmptyImplCopyWithImpl<$Res>
-    extends _$AddNoteStateCopyWithImpl<$Res, _$EmptyImpl>
-    implements _$$EmptyImplCopyWith<$Res> {
-  __$$EmptyImplCopyWithImpl(
-      _$EmptyImpl _value, $Res Function(_$EmptyImpl) _then)
-      : super(_value, _then);
-}
-
-/// @nodoc
-
-class _$EmptyImpl implements _Empty {
-  const _$EmptyImpl();
-
-  @override
-  String toString() {
-    return 'AddNoteState.empty()';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$EmptyImpl);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() loading,
-    required TResult Function() loaded,
-    required TResult Function(String message) error,
-    required TResult Function() empty,
-  }) {
-    return empty();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? loading,
-    TResult? Function()? loaded,
-    TResult? Function(String message)? error,
-    TResult? Function()? empty,
-  }) {
-    return empty?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function()? loaded,
-    TResult Function(String message)? error,
-    TResult Function()? empty,
-    required TResult orElse(),
-  }) {
-    if (empty != null) {
-      return empty();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Loaded value) loaded,
-    required TResult Function(_Error value) error,
-    required TResult Function(_Empty value) empty,
-  }) {
-    return empty(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Loaded value)? loaded,
-    TResult? Function(_Error value)? error,
-    TResult? Function(_Empty value)? empty,
-  }) {
-    return empty?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Loaded value)? loaded,
-    TResult Function(_Error value)? error,
-    TResult Function(_Empty value)? empty,
-    required TResult orElse(),
-  }) {
-    if (empty != null) {
-      return empty(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Empty implements AddNoteState {
-  const factory _Empty() = _$EmptyImpl;
 }
