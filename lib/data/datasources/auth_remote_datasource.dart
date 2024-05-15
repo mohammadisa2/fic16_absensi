@@ -88,6 +88,22 @@ class AuthRemoteDatasource {
     );
   }
 
+  Future<void> addMock(String flag) async {
+    final authData = await AuthLocalDatasource().getAuthData();
+    final url = Uri.parse('${Variables.baseUrl}/api/mock-location');
+    await http.post(
+      url,
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${authData?.token}',
+      },
+      body: jsonEncode({
+        'flag': flag,
+      }),
+    );
+  }
+
   Future<Either<String, NotificationResponseModel>> getNotification() async {
     final authData = await AuthLocalDatasource().getAuthData();
     final url = Uri.parse('${Variables.baseUrl}/api/api-broadcasts');

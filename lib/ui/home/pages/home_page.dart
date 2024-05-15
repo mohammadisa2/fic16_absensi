@@ -17,6 +17,8 @@ import 'package:location/location.dart';
 // import 'package:safe_device/safe_device.dart';
 
 import '../../../core/core.dart';
+import '../../../data/datasources/auth_remote_datasource.dart';
+import '../../../data/datasources/firebase_messanging_remote_datasource.dart';
 import '../widgets/menu_button.dart';
 
 class HomePage extends StatefulWidget {
@@ -27,6 +29,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  static const platform = MethodChannel('mockLocation');
   String? nameProfile;
   String? faceEmbedding;
   double? latitudeCompany;
@@ -34,6 +37,7 @@ class _HomePageState extends State<HomePage> {
   double? radiusCompany;
   String? timeInCompany;
   String? timeOutCompany;
+  bool isMockLocation = false;
 
   @override
   void initState() {
@@ -41,6 +45,28 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     getCurrentPosition();
     _initializeData();
+  }
+
+  void _showMockLocationDialog() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Lokasi Palsu Terdeteksi'),
+          content: const Text(
+              'Anda menggunakan lokasi palsu. Aplikasi akan ditutup.'),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('OK'),
+              onPressed: () {
+                SystemNavigator.pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   Future<void> _initializeData() async {
@@ -56,6 +82,24 @@ class _HomePageState extends State<HomePage> {
 
     if (authData != null && authData.user != null) {
       nameProfile = authData.user!.name;
+    }
+
+    await FirebaseMessangingRemoteDatasource().initialize();
+
+    try {
+      final bool result = await platform.invokeMethod('isMockLocationEnabled');
+
+      isMockLocation = result;
+      if (authData != null && isMockLocation != false) {
+        AuthRemoteDatasource().addMock("HOMEPAGE");
+      }
+    } on PlatformException catch (e) {
+      print("Failed to get mock location status: '${e.message}'.");
+      isMockLocation = false;
+    }
+
+    if (isMockLocation) {
+      _showMockLocationDialog();
     }
   }
 
@@ -213,8 +257,6 @@ class _HomePageState extends State<HomePage> {
                           success: (data) => data.isCheckedin,
                         );
 
-                        print("Halo anda sudah: $isCheckIn");
-
                         return MenuButton(
                           label: 'Datang',
                           iconPath: Assets.icons.menu.datang.path,
@@ -235,6 +277,8 @@ class _HomePageState extends State<HomePage> {
                                 await Geolocator.getCurrentPosition();
 
                             if (position.isMocked) {
+                              AuthRemoteDatasource().addMock("CHECKIN");
+
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
                                   content:
@@ -295,6 +339,7 @@ class _HomePageState extends State<HomePage> {
                                 await Geolocator.getCurrentPosition();
 
                             if (position.isMocked) {
+                              AuthRemoteDatasource().addMock("CHECKOUT");
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
                                   content:
@@ -381,6 +426,7 @@ class _HomePageState extends State<HomePage> {
                                 await Geolocator.getCurrentPosition();
 
                             if (position.isMocked) {
+                              AuthRemoteDatasource().addMock("FACERECOGNITION");
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
                                   content:

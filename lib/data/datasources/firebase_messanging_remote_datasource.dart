@@ -1,8 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:fic16_absensi/data/datasources/auth_local_datasource.dart';
 import 'package:fic16_absensi/data/datasources/auth_remote_datasource.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'auth_local_datasource.dart';
 
 class FirebaseMessangingRemoteDatasource {
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
@@ -14,6 +14,9 @@ class FirebaseMessangingRemoteDatasource {
       badge: true,
       sound: true,
     );
+    await Firebase.initializeApp();
+
+    FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
     const initializationSettingsAndroid =
         AndroidInitializationSettings('ic_permission');
@@ -58,8 +61,7 @@ class FirebaseMessangingRemoteDatasource {
       title,
       body,
       const NotificationDetails(
-        android: AndroidNotificationDetails(
-            'com.com.example.fic16_absensi', 'app',
+        android: AndroidNotificationDetails('com.example.fic16_absensi', 'app',
             importance: Importance.max),
         iOS: DarwinNotificationDetails(),
       ),
@@ -71,7 +73,7 @@ class FirebaseMessangingRemoteDatasource {
       RemoteMessage message) async {
     await Firebase.initializeApp();
 
-    FirebaseMessangingRemoteDatasource().firebaseBackgroundHandler(message);
+    FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   }
 
   Future<void> firebaseBackgroundHandler(RemoteMessage message) async {

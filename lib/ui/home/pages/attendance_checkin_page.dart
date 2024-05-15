@@ -13,6 +13,7 @@ import 'package:image/image.dart' as img;
 import 'package:location/location.dart';
 
 import '../../../core/core.dart';
+import '../../../data/datasources/auth_local_datasource.dart';
 import '../bloc/checkin_attendance/checkin_attendance_bloc.dart';
 import '../widgets/unauthorized.dart';
 
@@ -33,6 +34,7 @@ class _AttendanceCheckinPageState extends State<AttendanceCheckinPage> {
   CameraLensDirection camDirec = CameraLensDirection.front;
   bool isFaceRegistered = false;
   String faceStatusMessage = '';
+  late int companyId;
 
   //TODO declare face detectore
   late FaceDetector detector;
@@ -240,10 +242,19 @@ class _AttendanceCheckinPageState extends State<AttendanceCheckinPage> {
   }
 
   void _takeAbsen() async {
+    final authData = await AuthLocalDatasource().getAuthData();
+
+    if (authData != null) {
+      companyId = authData.user?.companyId ?? 0;
+    }
+
     if (mounted) {
       context.read<CheckinAttendanceBloc>().add(
             CheckinAttendanceEvent.checkin(
-                latitude.toString(), longitude.toString()),
+              latitude.toString(),
+              longitude.toString(),
+              companyId,
+            ),
           );
     }
   }

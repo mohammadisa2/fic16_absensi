@@ -19,19 +19,22 @@ mixin _$CheckoutAttendanceEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
-    required TResult Function(String latitute, String longitude) checkout,
+    required TResult Function(String latitute, String longitude, int companyId)
+        checkout,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
-    TResult? Function(String latitute, String longitude)? checkout,
+    TResult? Function(String latitute, String longitude, int companyId)?
+        checkout,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
-    TResult Function(String latitute, String longitude)? checkout,
+    TResult Function(String latitute, String longitude, int companyId)?
+        checkout,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -114,7 +117,8 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
-    required TResult Function(String latitute, String longitude) checkout,
+    required TResult Function(String latitute, String longitude, int companyId)
+        checkout,
   }) {
     return started();
   }
@@ -123,7 +127,8 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
-    TResult? Function(String latitute, String longitude)? checkout,
+    TResult? Function(String latitute, String longitude, int companyId)?
+        checkout,
   }) {
     return started?.call();
   }
@@ -132,7 +137,8 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
-    TResult Function(String latitute, String longitude)? checkout,
+    TResult Function(String latitute, String longitude, int companyId)?
+        checkout,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -183,7 +189,7 @@ abstract class _$$CheckoutImplCopyWith<$Res> {
           _$CheckoutImpl value, $Res Function(_$CheckoutImpl) then) =
       __$$CheckoutImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({String latitute, String longitude});
+  $Res call({String latitute, String longitude, int companyId});
 }
 
 /// @nodoc
@@ -199,6 +205,7 @@ class __$$CheckoutImplCopyWithImpl<$Res>
   $Res call({
     Object? latitute = null,
     Object? longitude = null,
+    Object? companyId = null,
   }) {
     return _then(_$CheckoutImpl(
       null == latitute
@@ -209,6 +216,10 @@ class __$$CheckoutImplCopyWithImpl<$Res>
           ? _value.longitude
           : longitude // ignore: cast_nullable_to_non_nullable
               as String,
+      null == companyId
+          ? _value.companyId
+          : companyId // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -216,16 +227,18 @@ class __$$CheckoutImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$CheckoutImpl implements _Checkout {
-  const _$CheckoutImpl(this.latitute, this.longitude);
+  const _$CheckoutImpl(this.latitute, this.longitude, this.companyId);
 
   @override
   final String latitute;
   @override
   final String longitude;
+  @override
+  final int companyId;
 
   @override
   String toString() {
-    return 'CheckoutAttendanceEvent.checkout(latitute: $latitute, longitude: $longitude)';
+    return 'CheckoutAttendanceEvent.checkout(latitute: $latitute, longitude: $longitude, companyId: $companyId)';
   }
 
   @override
@@ -236,11 +249,13 @@ class _$CheckoutImpl implements _Checkout {
             (identical(other.latitute, latitute) ||
                 other.latitute == latitute) &&
             (identical(other.longitude, longitude) ||
-                other.longitude == longitude));
+                other.longitude == longitude) &&
+            (identical(other.companyId, companyId) ||
+                other.companyId == companyId));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, latitute, longitude);
+  int get hashCode => Object.hash(runtimeType, latitute, longitude, companyId);
 
   @JsonKey(ignore: true)
   @override
@@ -252,29 +267,32 @@ class _$CheckoutImpl implements _Checkout {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
-    required TResult Function(String latitute, String longitude) checkout,
+    required TResult Function(String latitute, String longitude, int companyId)
+        checkout,
   }) {
-    return checkout(latitute, longitude);
+    return checkout(latitute, longitude, companyId);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
-    TResult? Function(String latitute, String longitude)? checkout,
+    TResult? Function(String latitute, String longitude, int companyId)?
+        checkout,
   }) {
-    return checkout?.call(latitute, longitude);
+    return checkout?.call(latitute, longitude, companyId);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
-    TResult Function(String latitute, String longitude)? checkout,
+    TResult Function(String latitute, String longitude, int companyId)?
+        checkout,
     required TResult orElse(),
   }) {
     if (checkout != null) {
-      return checkout(latitute, longitude);
+      return checkout(latitute, longitude, companyId);
     }
     return orElse();
   }
@@ -312,11 +330,13 @@ class _$CheckoutImpl implements _Checkout {
 }
 
 abstract class _Checkout implements CheckoutAttendanceEvent {
-  const factory _Checkout(final String latitute, final String longitude) =
+  const factory _Checkout(
+          final String latitute, final String longitude, final int companyId) =
       _$CheckoutImpl;
 
   String get latitute;
   String get longitude;
+  int get companyId;
   @JsonKey(ignore: true)
   _$$CheckoutImplCopyWith<_$CheckoutImpl> get copyWith =>
       throw _privateConstructorUsedError;

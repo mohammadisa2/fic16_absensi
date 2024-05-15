@@ -11,6 +11,9 @@
         android:icon="@mipmap/ic_launcher">
         <meta-data android:name="com.google.android.geo.API_KEY"
         android:value="AIzaSyCBNM2H0aeBK-NlpaLfX7DXnHLBdcJKAsk"/>
+        <meta-data
+        android:name="com.google.firebase.messaging.default_notification_icon"
+        android:resource="@drawable/ic_permission"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"

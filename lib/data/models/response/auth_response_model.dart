@@ -141,15 +141,16 @@ class User {
   dynamic twoFactorSecret;
   dynamic twoFactorRecoveryCodes;
   dynamic twoFactorConfirmedAt;
-  String? fcmToken;
+  dynamic fcmToken;
   DateTime? createdAt;
   DateTime? updatedAt;
   dynamic phone;
   String? role;
   String? position;
-  String? department;
-  String? faceEmbedding;
+  int? departmentId;
+  dynamic faceEmbedding;
   dynamic imageUrl;
+  int? companyId;
 
   User({
     this.id,
@@ -165,9 +166,10 @@ class User {
     this.phone,
     this.role,
     this.position,
-    this.department,
+    this.departmentId,
     this.faceEmbedding,
     this.imageUrl,
+    this.companyId,
   });
 
   User copyWith({
@@ -178,15 +180,16 @@ class User {
     dynamic twoFactorSecret,
     dynamic twoFactorRecoveryCodes,
     dynamic twoFactorConfirmedAt,
-    String? fcmToken,
+    dynamic fcmToken,
     DateTime? createdAt,
     DateTime? updatedAt,
     dynamic phone,
     String? role,
     String? position,
-    String? department,
-    String? faceEmbedding,
+    int? departmentId,
+    dynamic faceEmbedding,
     dynamic imageUrl,
+    int? companyId,
   }) =>
       User(
         id: id ?? this.id,
@@ -203,9 +206,10 @@ class User {
         phone: phone ?? this.phone,
         role: role ?? this.role,
         position: position ?? this.position,
-        department: department ?? this.department,
+        departmentId: departmentId ?? this.departmentId,
         faceEmbedding: faceEmbedding ?? this.faceEmbedding,
         imageUrl: imageUrl ?? this.imageUrl,
+        companyId: companyId ?? this.companyId,
       );
 
   factory User.fromJson(String str) => User.fromMap(json.decode(str));
@@ -232,9 +236,10 @@ class User {
         phone: json["phone"],
         role: json["role"],
         position: json["position"],
-        department: json["department"],
+        departmentId: json["department_id"],
         faceEmbedding: json["face_embedding"],
         imageUrl: json["image_url"],
+        companyId: json["company_id"],
       );
 
   Map<String, dynamic> toMap() => {
@@ -251,8 +256,9 @@ class User {
         "phone": phone,
         "role": role,
         "position": position,
-        "department": department,
+        "department_id": departmentId,
         "face_embedding": faceEmbedding,
         "image_url": imageUrl,
+        "company_id": companyId,
       };
 }

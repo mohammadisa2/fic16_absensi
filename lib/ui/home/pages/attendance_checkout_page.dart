@@ -15,6 +15,7 @@ import 'package:image/image.dart' as img;
 import 'package:location/location.dart';
 
 import '../../../core/core.dart';
+import '../../../data/datasources/auth_local_datasource.dart';
 
 class AttendanceCheckoutPage extends StatefulWidget {
   const AttendanceCheckoutPage({super.key});
@@ -33,6 +34,7 @@ class _AttendanceCheckoutPageState extends State<AttendanceCheckoutPage> {
   CameraLensDirection camDirec = CameraLensDirection.front;
   bool isFaceRegistered = false;
   String faceStatusMessage = '';
+  late int companyId;
 
   //TODO declare face detectore
   late FaceDetector detector;
@@ -228,10 +230,19 @@ class _AttendanceCheckoutPageState extends State<AttendanceCheckoutPage> {
   }
 
   void _takeAbsen() async {
+    final authData = await AuthLocalDatasource().getAuthData();
+
+    if (authData != null) {
+      companyId = authData.user?.companyId ?? 0;
+    }
+
     if (mounted) {
       context.read<CheckoutAttendanceBloc>().add(
             CheckoutAttendanceEvent.checkout(
-                latitude.toString(), longitude.toString()),
+              latitude.toString(),
+              longitude.toString(),
+              companyId,
+            ),
           );
     }
   }

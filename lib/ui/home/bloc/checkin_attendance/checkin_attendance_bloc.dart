@@ -20,6 +20,7 @@ class CheckinAttendanceBloc
       final requestModel = CheckInOutRequestModel(
         latitude: event.latitute,
         longitude: event.longitude,
+        companyId: event.companyId,
       );
       final result = await datasource.checkin(requestModel);
       result.fold(

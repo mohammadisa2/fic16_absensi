@@ -29,22 +29,28 @@ class CheckInOutResponseModel {
 }
 
 class Attendance {
+  final int? id;
   final int? userId;
+  final int? companyId;
   final DateTime? date;
   final String? timeIn;
+  final String? timeOut;
   final String? latlonIn;
-  final DateTime? updatedAt;
+  final String? latlonOut;
   final DateTime? createdAt;
-  final int? id;
+  final DateTime? updatedAt;
 
   Attendance({
+    this.id,
     this.userId,
+    this.companyId,
     this.date,
     this.timeIn,
+    this.timeOut,
     this.latlonIn,
-    this.updatedAt,
+    this.latlonOut,
     this.createdAt,
-    this.id,
+    this.updatedAt,
   });
 
   factory Attendance.fromJson(String str) =>
@@ -53,27 +59,33 @@ class Attendance {
   String toJson() => json.encode(toMap());
 
   factory Attendance.fromMap(Map<String, dynamic> json) => Attendance(
+        id: json["id"],
         userId: json["user_id"],
+        companyId: json["company_id"],
         date: json["date"] == null ? null : DateTime.parse(json["date"]),
         timeIn: json["time_in"],
+        timeOut: json["time_out"],
         latlonIn: json["latlon_in"],
-        updatedAt: json["updated_at"] == null
-            ? null
-            : DateTime.parse(json["updated_at"]),
+        latlonOut: json["latlon_out"],
         createdAt: json["created_at"] == null
             ? null
             : DateTime.parse(json["created_at"]),
-        id: json["id"],
+        updatedAt: json["updated_at"] == null
+            ? null
+            : DateTime.parse(json["updated_at"]),
       );
 
   Map<String, dynamic> toMap() => {
+        "id": id,
         "user_id": userId,
+        "company_id": companyId,
         "date":
             "${date!.year.toString().padLeft(4, '0')}-${date!.month.toString().padLeft(2, '0')}-${date!.day.toString().padLeft(2, '0')}",
         "time_in": timeIn,
+        "time_out": timeOut,
         "latlon_in": latlonIn,
-        "updated_at": updatedAt?.toIso8601String(),
+        "latlon_out": latlonOut,
         "created_at": createdAt?.toIso8601String(),
-        "id": id,
+        "updated_at": updatedAt?.toIso8601String(),
       };
 }

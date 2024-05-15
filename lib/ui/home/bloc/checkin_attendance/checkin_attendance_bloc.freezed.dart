@@ -19,19 +19,21 @@ mixin _$CheckinAttendanceEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
-    required TResult Function(String latitute, String longitude) checkin,
+    required TResult Function(String latitute, String longitude, int companyId)
+        checkin,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
-    TResult? Function(String latitute, String longitude)? checkin,
+    TResult? Function(String latitute, String longitude, int companyId)?
+        checkin,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
-    TResult Function(String latitute, String longitude)? checkin,
+    TResult Function(String latitute, String longitude, int companyId)? checkin,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -114,7 +116,8 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
-    required TResult Function(String latitute, String longitude) checkin,
+    required TResult Function(String latitute, String longitude, int companyId)
+        checkin,
   }) {
     return started();
   }
@@ -123,7 +126,8 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
-    TResult? Function(String latitute, String longitude)? checkin,
+    TResult? Function(String latitute, String longitude, int companyId)?
+        checkin,
   }) {
     return started?.call();
   }
@@ -132,7 +136,7 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
-    TResult Function(String latitute, String longitude)? checkin,
+    TResult Function(String latitute, String longitude, int companyId)? checkin,
     required TResult orElse(),
   }) {
     if (started != null) {
@@ -183,7 +187,7 @@ abstract class _$$CheckinImplCopyWith<$Res> {
           _$CheckinImpl value, $Res Function(_$CheckinImpl) then) =
       __$$CheckinImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({String latitute, String longitude});
+  $Res call({String latitute, String longitude, int companyId});
 }
 
 /// @nodoc
@@ -199,6 +203,7 @@ class __$$CheckinImplCopyWithImpl<$Res>
   $Res call({
     Object? latitute = null,
     Object? longitude = null,
+    Object? companyId = null,
   }) {
     return _then(_$CheckinImpl(
       null == latitute
@@ -209,6 +214,10 @@ class __$$CheckinImplCopyWithImpl<$Res>
           ? _value.longitude
           : longitude // ignore: cast_nullable_to_non_nullable
               as String,
+      null == companyId
+          ? _value.companyId
+          : companyId // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -216,16 +225,18 @@ class __$$CheckinImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$CheckinImpl implements _Checkin {
-  const _$CheckinImpl(this.latitute, this.longitude);
+  const _$CheckinImpl(this.latitute, this.longitude, this.companyId);
 
   @override
   final String latitute;
   @override
   final String longitude;
+  @override
+  final int companyId;
 
   @override
   String toString() {
-    return 'CheckinAttendanceEvent.checkin(latitute: $latitute, longitude: $longitude)';
+    return 'CheckinAttendanceEvent.checkin(latitute: $latitute, longitude: $longitude, companyId: $companyId)';
   }
 
   @override
@@ -236,11 +247,13 @@ class _$CheckinImpl implements _Checkin {
             (identical(other.latitute, latitute) ||
                 other.latitute == latitute) &&
             (identical(other.longitude, longitude) ||
-                other.longitude == longitude));
+                other.longitude == longitude) &&
+            (identical(other.companyId, companyId) ||
+                other.companyId == companyId));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, latitute, longitude);
+  int get hashCode => Object.hash(runtimeType, latitute, longitude, companyId);
 
   @JsonKey(ignore: true)
   @override
@@ -252,29 +265,31 @@ class _$CheckinImpl implements _Checkin {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() started,
-    required TResult Function(String latitute, String longitude) checkin,
+    required TResult Function(String latitute, String longitude, int companyId)
+        checkin,
   }) {
-    return checkin(latitute, longitude);
+    return checkin(latitute, longitude, companyId);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
-    TResult? Function(String latitute, String longitude)? checkin,
+    TResult? Function(String latitute, String longitude, int companyId)?
+        checkin,
   }) {
-    return checkin?.call(latitute, longitude);
+    return checkin?.call(latitute, longitude, companyId);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
-    TResult Function(String latitute, String longitude)? checkin,
+    TResult Function(String latitute, String longitude, int companyId)? checkin,
     required TResult orElse(),
   }) {
     if (checkin != null) {
-      return checkin(latitute, longitude);
+      return checkin(latitute, longitude, companyId);
     }
     return orElse();
   }
@@ -312,11 +327,13 @@ class _$CheckinImpl implements _Checkin {
 }
 
 abstract class _Checkin implements CheckinAttendanceEvent {
-  const factory _Checkin(final String latitute, final String longitude) =
+  const factory _Checkin(
+          final String latitute, final String longitude, final int companyId) =
       _$CheckinImpl;
 
   String get latitute;
   String get longitude;
+  int get companyId;
   @JsonKey(ignore: true)
   _$$CheckinImplCopyWith<_$CheckinImpl> get copyWith =>
       throw _privateConstructorUsedError;
